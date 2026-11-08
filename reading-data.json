@@ -1,7 +1,26 @@
 {
-  "updatedAt": "2026-11-08T07:31:00.715Z",
+  "updatedAt": "2026-11-08T07:33:05.936Z",
   "yearlyGoal": 24,
   "books": [
+    {
+      "id": "book_1794123183956",
+      "title": "부의 갈림길 : 대전환의 시작",
+      "author": "오건영",
+      "totalPages": 400,
+      "purchaseDate": "2026-09-11",
+      "iconId": "lavender-book",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-09-12",
+          "targetDate": "2026-09-18",
+          "endDate": "2026-09-18",
+          "currentPage": 400,
+          "memo": "국제 정세와 매크로를 보는 눈이 중요하다"
+        }
+      ]
+    },
     {
       "id": "book_1794123058761",
       "title": "이효석의 21세기 투자법",
