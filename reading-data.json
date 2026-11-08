@@ -1,7 +1,26 @@
 {
-  "updatedAt": "2026-11-08T07:48:12.496Z",
+  "updatedAt": "2026-11-08T07:49:57.733Z",
   "yearlyGoal": 24,
   "books": [
+    {
+      "id": "book_1794124195763",
+      "title": "55세 전, 연금을 키워라!",
+      "author": "김범곤",
+      "totalPages": 400,
+      "purchaseDate": "2026-08-29",
+      "iconId": "crystal-book",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-08-29",
+          "targetDate": "2026-09-07",
+          "endDate": "2026-09-07",
+          "currentPage": 400,
+          "memo": "곤쌤의 노하우를 보자"
+        }
+      ]
+    },
     {
       "id": "book_1794124038825",
       "title": "ETF 연금수업",
