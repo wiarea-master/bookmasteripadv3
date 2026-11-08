@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T07:13:36.668Z",
+  "updatedAt": "2026-11-08T07:13:46.150Z",
   "yearlyGoal": 30,
   "books": [
     {
@@ -20,7 +20,8 @@
           "currentPage": 380,
           "memo": ""
         }
-      ]
+      ],
+      "iconId": "open-book"
     },
     {
       "id": "book_1794118477977",
