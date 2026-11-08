@@ -1,7 +1,26 @@
 {
-  "updatedAt": "2026-11-08T07:23:38.205Z",
+  "updatedAt": "2026-11-08T07:31:00.715Z",
   "yearlyGoal": 24,
   "books": [
+    {
+      "id": "book_1794123058761",
+      "title": "이효석의 21세기 투자법",
+      "author": "이효석",
+      "totalPages": 400,
+      "purchaseDate": "2026-09-27",
+      "iconId": "coffee-book",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-09-27",
+          "targetDate": "2026-10-04",
+          "endDate": "2026-10-05",
+          "currentPage": 400,
+          "memo": ""
+        }
+      ]
+    },
     {
       "id": "book_1794118903450",
       "title": "사라지는 돈, 살아남는 돈, 불어나는 돈",
