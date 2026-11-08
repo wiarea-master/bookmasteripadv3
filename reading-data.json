@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T07:12:48.108Z",
+  "updatedAt": "2026-11-08T07:12:52.886Z",
   "yearlyGoal": 30,
   "books": [
     {
@@ -148,7 +148,8 @@
           "targetDate": "2026-11-16"
         }
       ],
-      "coverBg": "#FEF9C3"
+      "coverBg": "#FEF9C3",
+      "iconId": "brown-book"
     },
     {
       "id": "book_1730000001",
