@@ -1,7 +1,26 @@
 {
-  "updatedAt": "2026-11-08T07:33:50.368Z",
+  "updatedAt": "2026-11-08T07:36:32.404Z",
   "yearlyGoal": 24,
   "books": [
+    {
+      "id": "book_1794123390438",
+      "title": "천만 원으로 시작해 매달 500만원 받는 ETF 월배당머신",
+      "author": "김지형 평온",
+      "totalPages": 361,
+      "purchaseDate": "2026-09-26",
+      "iconId": "bulb-book",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-09-26",
+          "targetDate": "2026-09-30",
+          "endDate": "2026-09-30",
+          "currentPage": 361,
+          "memo": ""
+        }
+      ]
+    },
     {
       "id": "book_1794123183956",
       "title": "부의 갈림길 : 대전환의 시작",
