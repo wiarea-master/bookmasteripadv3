@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T07:12:57.252Z",
+  "updatedAt": "2026-11-08T07:13:10.709Z",
   "yearlyGoal": 30,
   "books": [
     {
@@ -50,7 +50,7 @@
           "memo": "정리하기 위해 한 번 더!"
         }
       ],
-      "iconId": "mint-book"
+      "iconId": "lavender-book"
     },
     {
       "id": "book_1794110767478",
