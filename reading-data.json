@@ -1,7 +1,26 @@
 {
-  "updatedAt": "2026-11-08T07:49:57.733Z",
+  "updatedAt": "2026-11-08T07:52:35.711Z",
   "yearlyGoal": 24,
   "books": [
+    {
+      "id": "book_1794124353711",
+      "title": "3개의 미국 ETF로 은퇴하라",
+      "author": "포메뽀꼬 김지훈",
+      "totalPages": 400,
+      "purchaseDate": "2026-10-19",
+      "iconId": "maple-book",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-10-19",
+          "targetDate": "2026-10-26",
+          "endDate": "2026-10-26",
+          "currentPage": 400,
+          "memo": "그럴듯한 내용. 공감감."
+        }
+      ]
+    },
     {
       "id": "book_1794124195763",
       "title": "55세 전, 연금을 키워라!",
