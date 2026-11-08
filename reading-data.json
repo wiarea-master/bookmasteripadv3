@@ -1,0 +1,191 @@
+{
+  "updatedAt": "2026-11-08T07:10:54.136Z",
+  "yearlyGoal": 30,
+  "books": [
+    {
+      "id": "book_1794118903450",
+      "title": "사라지는 돈, 살아남는 돈, 불어나는 돈",
+      "author": "김효진",
+      "totalPages": 380,
+      "purchaseDate": "2026-09-26",
+      "coverEmoji": "💎",
+      "coverBg": "#ECFEFF",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-09-26",
+          "endDate": "2026-10-01",
+          "targetDate": "2026-10-01",
+          "currentPage": 380,
+          "memo": ""
+        }
+      ]
+    },
+    {
+      "id": "book_1794118477977",
+      "title": "1억부터는 포트폴리오다",
+      "author": "신환종",
+      "totalPages": 392,
+      "purchaseDate": "2026-09-30",
+      "coverEmoji": "📘",
+      "coverBg": "#DBEAFE",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-10-01",
+          "endDate": "2026-10-07",
+          "targetDate": "2026-10-07",
+          "currentPage": 392,
+          "memo": "포트폴리오를 알아야 할 시기"
+        },
+        {
+          "round": 2,
+          "status": "reading",
+          "startDate": "2026-11-04",
+          "endDate": "",
+          "targetDate": "2026-11-15",
+          "currentPage": 102,
+          "memo": "정리하기 위해 한 번 더!"
+        }
+      ]
+    },
+    {
+      "id": "book_1794110767478",
+      "title": "돈의 역류",
+      "author": "김광석",
+      "totalPages": 320,
+      "purchaseDate": "2026-10-24",
+      "coverEmoji": "🐳",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-10-24",
+          "endDate": "2026-10-29",
+          "targetDate": "2026-10-29",
+          "currentPage": 320,
+          "memo": ""
+        }
+      ],
+      "coverBg": "#E0F2FE"
+    },
+    {
+      "id": "book_1794061773328",
+      "title": "독하게 돈 공부",
+      "author": "박소연",
+      "totalPages": 360,
+      "purchaseDate": "2026-09-19",
+      "coverEmoji": "📕",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-09-19",
+          "endDate": "2026-09-24",
+          "currentPage": 360,
+          "memo": "돈 공부가 필요한 때",
+          "targetDate": "2026-09-24"
+        },
+        {
+          "round": 2,
+          "status": "completed",
+          "startDate": "2026-10-03",
+          "endDate": "2026-10-08",
+          "targetDate": "2026-10-10",
+          "currentPage": 360,
+          "memo": ""
+        },
+        {
+          "round": 3,
+          "status": "completed",
+          "startDate": "2026-10-19",
+          "endDate": "2026-10-23",
+          "targetDate": "2026-10-25",
+          "currentPage": 360,
+          "memo": ""
+        }
+      ],
+      "coverBg": "#FFE4E6"
+    },
+    {
+      "id": "book_1794061552481",
+      "title": "생각에 관한 생각",
+      "author": "대네얼 카너먼",
+      "totalPages": 1291,
+      "purchaseDate": "2026-11-07",
+      "coverEmoji": "📕",
+      "readings": [
+        {
+          "round": 1,
+          "status": "reading",
+          "startDate": "2026-11-07",
+          "endDate": "",
+          "currentPage": 1290,
+          "memo": "행동주의 심리학..",
+          "targetDate": "2026-11-18"
+        }
+      ],
+      "coverBg": "#FFE4E6"
+    },
+    {
+      "id": "book_1794061433756",
+      "title": "The 7 habits",
+      "author": "Stephen Covey",
+      "totalPages": 495,
+      "purchaseDate": "2026-11-05",
+      "coverEmoji": "📔",
+      "readings": [
+        {
+          "round": 1,
+          "status": "reading",
+          "startDate": "2026-11-07",
+          "endDate": "",
+          "currentPage": 145,
+          "memo": "내 인생의 나침반",
+          "targetDate": "2026-11-16"
+        }
+      ],
+      "coverBg": "#FEF9C3"
+    },
+    {
+      "id": "book_1730000001",
+      "title": "돈의 심리학 - 당신은 왜 부자가 못됐나",
+      "author": "모건 하우절",
+      "totalPages": 406,
+      "purchaseDate": "2026-10-04",
+      "coverEmoji": "🏛️",
+      "readings": [
+        {
+          "round": 1,
+          "status": "completed",
+          "startDate": "2026-10-04",
+          "endDate": "2026-10-10",
+          "currentPage": 406,
+          "memo": "부를 대하는 태도와 복리의 마법을 다시 생각하게 해준 최고의 책!",
+          "targetDate": "2026-10-10"
+        },
+        {
+          "round": 2,
+          "status": "completed",
+          "startDate": "2026-10-17",
+          "endDate": "2026-10-22",
+          "currentPage": 406,
+          "memo": "두 번째 읽으니 저자의 핵심 사례들이 더 명확하게 들어온다.",
+          "targetDate": "2026-10-22"
+        },
+        {
+          "round": 3,
+          "status": "completed",
+          "startDate": "2026-10-31",
+          "endDate": "2026-11-04",
+          "currentPage": 406,
+          "memo": "마지막 정리까지 완벽!",
+          "targetDate": "2026-11-04"
+        }
+      ],
+      "coverBg": "#1E293B"
+    }
+  ]
+}
