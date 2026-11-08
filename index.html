@@ -88,6 +88,17 @@
     input[type="range"]::-webkit-slider-thumb:active {
       transform: scale(1.18);
     }
+    /* 아이패드 Safari에서 input[type="date"]가 옆 칸을 침범하여 겹치는 현상 완벽 방지 */
+    input[type="date"] {
+      -webkit-appearance: none;
+      appearance: none;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      min-height: 42px;
+    }
     .cal-bar {
       transition: filter 0.15s ease, transform 0.1s ease;
     }
@@ -107,7 +118,7 @@
   <!-- 전체 컨테이너 (아이패드 와이드 대응 max-w-6xl) -->
   <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-5 pb-12">
 
-    <!-- 1. 상단 격려 배너 & 앱 타이틀 (스크롤 시 자연스럽게 위로 올라가서 안 보이도록 static/relative 배치) -->
+    <!-- 1. 상단 격려 배너 & 앱 타이틀 (스크롤 시 자연스럽게 위로 올라가서 안 보이도록 배치) -->
     <header class="relative mb-5">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
         <div class="flex items-center gap-3">
@@ -120,7 +131,6 @@
           </div>
         </div>
 
-        <!-- 우측: 클라우드 동기화 상태 배지 + 새 책 등록 버튼 -->
         <div class="flex items-center gap-2">
           <button onclick="switchTab('settings')" id="syncStatusBadge"
             class="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs sm:text-sm font-bold bg-warmBeige border border-amber-200/80 text-cozyBrown shadow-sm hover:bg-amber-100/60 transition">
@@ -134,7 +144,6 @@
         </div>
       </div>
 
-      <!-- 상황 맞춤형 격려의 글 배너 -->
       <div id="motivationBanner"
         class="w-full rounded-2xl bg-gradient-to-r from-[#FFF5EC] via-[#FFF9E6] to-[#F2FBF7] border border-amber-200/70 px-5 py-3.5 shadow-sm flex items-center justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -224,8 +233,8 @@
         </div>
       </div>
 
-      <!-- 구글 캘린더 스타일 독서 현황 캘린더 -->
-      <div class="bg-white rounded-3xl p-4 sm:p-6 border border-amber-200/80 shadow-sm">
+      <!-- 구글 캘린더 스타일 독서 현황 캘린더 (4권 이상일 때도 절대 삐져나가지 않도록 동적 높이 적용!) -->
+      <div class="bg-white rounded-3xl p-4 sm:p-6 border border-amber-200/80 shadow-sm overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div class="flex items-center gap-2">
             <span class="text-2xl">🗓️</span>
@@ -252,7 +261,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-7 text-center text-xs sm:text-sm font-bold border-b border-amber-200/70 pb-2 mb-1">
+        <div class="grid grid-cols-7 text-center text-xs sm:text-sm font-bold border-b border-amber-200/70 pb-2">
           <div class="text-red-500">일</div>
           <div class="text-cozyBrown">월</div>
           <div class="text-cozyBrown">화</div>
@@ -262,7 +271,7 @@
           <div class="text-blue-500">토</div>
         </div>
 
-        <div id="calendarWeeksContainer" class="divide-y divide-amber-100 border-b border-amber-200/70"></div>
+        <div id="calendarWeeksContainer" class="divide-y divide-amber-200/70 border-b border-amber-200/70"></div>
 
         <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500">
           <div class="flex flex-wrap items-center gap-3">
@@ -298,7 +307,7 @@
               class="pl-3.5 pr-3 py-2 rounded-xl bg-warmBeige/70 border border-amber-200 text-sm focus:outline-none focus:border-accentCoral w-48 sm:w-56" />
           </div>
 
-          <div class="flex items-center gap-1.5 bg-warmBeige/60 p-1 rounded-xl border border-amber-200/70">
+          <div class="flex flex-wrap items-center gap-1.5 bg-warmBeige/60 p-1 rounded-xl border border-amber-200/70">
             <span class="text-xs font-bold text-cozyBrown px-2">정렬:</span>
             <button onclick="setBookshelfSort('purchaseDate')" id="sortBtn-purchaseDate"
               class="sort-btn px-2.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-cozyBrown shadow-sm">
@@ -327,7 +336,7 @@
           </button>
           <button onclick="setBookshelfView('list')" id="viewBtn-list"
             class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
-            📋 한 줄 리스트
+            📋 간단 리스트
           </button>
           <button onclick="setBookshelfView('mini')" id="viewBtn-mini"
             class="view-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
@@ -340,7 +349,7 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- [탭 3] 📊 독서통계 (1월~12월 고정 그래프 & 1권 카운팅 기본화) -->
+    <!-- [탭 3] 📊 독서통계 (1월~12월 고정 그래프 & 완독 리스트 보기 모드 추가!) -->
     <!-- ========================================================== -->
     <section id="tabContent-stats" class="hidden space-y-6">
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/80 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -416,21 +425,41 @@
         <div id="monthlyChartContainer" class="grid grid-cols-12 gap-2 sm:gap-3 items-end h-48 pt-6 pb-2 px-2 bg-warmBeige/40 rounded-2xl border border-amber-100"></div>
       </div>
 
+      <!-- [핵심 추가] 독서통계 하단 완독 도서 리스트 + 보기 방식 전환 버튼 (기본 타일 / 간단 리스트 / 1/5 미니 타일) -->
       <div class="bg-white rounded-3xl p-5 sm:p-6 border border-amber-200/80 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <h3 id="statsCompletedListTitle" class="font-title text-xl text-cozyBrown">2026년 전체 완독 (0권)</h3>
-          <span class="text-xs text-gray-500">카드를 누르면 상세 독후감과 회독 기록을 볼 수 있습니다</span>
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 id="statsCompletedListTitle" class="font-title text-xl text-cozyBrown">2026년 전체 완독 (0권)</h3>
+            <p class="text-xs text-gray-500 mt-0.5">카드를 누르면 상세 독후감과 회독 기록을 볼 수 있습니다</p>
+          </div>
+
+          <!-- 통계 완독 리스트 전용 보기 모드 토글 -->
+          <div class="flex items-center gap-1.5 bg-warmBeige/70 p-1 rounded-xl border border-amber-200/80">
+            <span class="text-xs font-bold text-cozyBrown px-2">보기:</span>
+            <button onclick="setStatsListView('tile')" id="statsViewBtn-tile"
+              class="stats-view-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-cozyBrown shadow-sm">
+              🗂️ 기본 타일
+            </button>
+            <button onclick="setStatsListView('list')" id="statsViewBtn-list"
+              class="stats-view-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
+              📋 간단 모드
+            </button>
+            <button onclick="setStatsListView('mini')" id="statsViewBtn-mini"
+              class="stats-view-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
+              🧱 미니 타일 (1/5)
+            </button>
+          </div>
         </div>
-        <div id="statsCompletedListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+        <div id="statsCompletedListContainer"></div>
       </div>
     </section>
 
     <!-- ========================================================== -->
-    <!-- [탭 4] ⚙️ 관리·동기화 (CORS 패치 & 정밀 진단기 탑재) -->
+    <!-- [탭 4] ⚙️ 관리·동기화 -->
     <!-- ========================================================== -->
     <section id="tabContent-settings" class="hidden space-y-6">
 
-      <!-- 1. GitHub 클라우드 자동 저장 및 자동 불러오기 설정 카드 -->
       <div class="bg-white rounded-3xl p-5 sm:p-6 border-2 border-amber-300/80 shadow-sm">
         <div class="flex items-start justify-between gap-3 mb-4">
           <div class="flex items-center gap-2.5">
@@ -490,7 +519,6 @@
         </div>
       </div>
 
-      <!-- 2. 구글 드라이브 / 아이패드 폴더 JSON 백업 파일 내보내기 & 불러오기 -->
       <div class="bg-white rounded-3xl p-5 sm:p-6 border border-amber-200/80 shadow-sm">
         <div class="flex items-center gap-2.5 mb-3">
           <span class="text-2xl">📁</span>
@@ -521,7 +549,6 @@
         </div>
       </div>
 
-      <!-- 3. 초기 샘플 데이터 복원 -->
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/60 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h3 class="font-title text-base text-cozyBrown">🧪 샘플 데이터 초기화</h3>
@@ -537,7 +564,7 @@
   </div>
 
   <!-- ========================================================== -->
-  <!-- [모달 1] 새 책 등록 / 상세 수정 모달 -->
+  <!-- [모달 1] 새 책 등록 / 상세 수정 모달 (아이패드 날짜 입력칸 겹침 완벽 해결!) -->
   <!-- ========================================================== -->
   <div id="bookModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-cream rounded-3xl max-w-2xl w-full p-5 sm:p-7 border-2 border-amber-200 shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
@@ -555,17 +582,17 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-4">
-        <div class="sm:col-span-6">
+        <div class="sm:col-span-6 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">📖 책 제목 *</label>
           <input type="text" id="modalTitle" placeholder="예: 돈의 심리학"
             class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-amber-300 text-sm font-bold focus:outline-none focus:border-accentCoral" />
         </div>
-        <div class="sm:col-span-4">
+        <div class="sm:col-span-4 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">✍️ 저자 *</label>
           <input type="text" id="modalAuthor" placeholder="예: 모건 하우절"
             class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-amber-300 text-sm focus:outline-none focus:border-accentCoral" />
         </div>
-        <div class="sm:col-span-2">
+        <div class="sm:col-span-2 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">📄 총 페이지 *</label>
           <input type="number" id="modalTotalPages" min="1" placeholder="350"
             class="w-full px-3 py-2.5 rounded-xl bg-white border border-amber-300 text-sm font-bold focus:outline-none focus:border-accentCoral" />
@@ -583,28 +610,38 @@
         <div id="modalRoundTabs" class="flex flex-wrap gap-2"></div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 bg-warmBeige/50 p-3.5 rounded-2xl border border-amber-200/70">
-        <div>
-          <label class="block text-xs font-bold text-cozyBrown mb-1">🛒 1. 구입 날짜</label>
+      <!-- [핵심 수정] 아이패드에서 양쪽 날짜 칸이 절대 겹치지 않도록 min-w-0 overflow-hidden 및 정렬 보정 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 bg-warmBeige/50 p-4 rounded-2xl border border-amber-200/70">
+        <div class="min-w-0 overflow-hidden">
+          <div class="flex items-center justify-between min-h-[26px] mb-1">
+            <label class="block text-xs font-bold text-cozyBrown">🛒 1. 구입 날짜</label>
+          </div>
           <input type="date" id="modalPurchaseDate"
             class="w-full px-3 py-2 rounded-xl bg-white border border-amber-300 text-sm focus:outline-none" />
         </div>
-        <div>
-          <label class="block text-xs font-bold text-cozyBrown mb-1">🌱 2. 읽기 시작 날짜 *</label>
+
+        <div class="min-w-0 overflow-hidden">
+          <div class="flex items-center justify-between min-h-[26px] mb-1">
+            <label class="block text-xs font-bold text-cozyBrown">🌱 2. 읽기 시작 날짜 *</label>
+          </div>
           <input type="date" id="modalStartDate"
             class="w-full px-3 py-2 rounded-xl bg-white border border-amber-300 text-sm focus:outline-none" />
         </div>
-        <div>
-          <label class="block text-xs font-bold text-amber-800 mb-1">🎯 완독 목표일 (독서 페이스 ▼ 계산용)</label>
+
+        <div class="min-w-0 overflow-hidden">
+          <div class="flex items-center justify-between min-h-[26px] mb-1">
+            <label class="block text-xs font-bold text-amber-800">🎯 완독 목표일 (독서 페이스 ▼ 계산)</label>
+          </div>
           <input type="date" id="modalTargetDate"
             class="w-full px-3 py-2 rounded-xl bg-softYellow/50 border border-amber-300 text-sm font-bold focus:outline-none" />
         </div>
-        <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="text-xs font-bold text-teal-900">🎉 3. 완독 날짜 (비워두면 '읽는 중')</label>
+
+        <div class="min-w-0 overflow-hidden">
+          <div class="flex items-center justify-between gap-1 min-h-[26px] mb-1">
+            <label class="text-xs font-bold text-teal-900 truncate">🎉 3. 완독 날짜 <span class="font-normal text-[11px] text-gray-500">(비우면 읽는중)</span></label>
             <button type="button" onclick="clearModalEndDate()"
-              class="px-2 py-0.5 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-[11px] font-bold transition">
-              ❌ 날짜 비우기 (읽는 중으로)
+              class="shrink-0 px-2 py-0.5 rounded-lg bg-red-100 hover:bg-red-200 text-red-700 text-[11px] font-bold transition">
+              ❌ 날짜 비우기
             </button>
           </div>
           <input type="date" id="modalEndDate"
@@ -613,13 +650,13 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-5">
-        <div class="sm:col-span-4">
+        <div class="sm:col-span-4 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">🔖 현재 읽은 페이지</label>
           <input type="number" id="modalCurrentPage" min="0" placeholder="0"
             class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-amber-300 text-sm font-bold focus:outline-none" />
           <p class="text-[11px] text-gray-500 mt-1">완독 날짜를 비워두면 이 페이지로 진도가 표시됩니다.</p>
         </div>
-        <div class="sm:col-span-8">
+        <div class="sm:col-span-8 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">📝 4. 간단한 독후감 메모 (회독별 저장)</label>
           <textarea id="modalMemo" rows="3" placeholder="이 책을 읽으며 느낀 점이나 기억하고 싶은 문장을 자유롭게 적어보세요..."
             class="w-full px-3.5 py-2 rounded-xl bg-white border border-amber-300 text-sm focus:outline-none focus:border-accentCoral"></textarea>
@@ -714,8 +751,9 @@
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let bookshelfSort = 'purchaseDate';
-    let bookshelfView = 'tile';
-    let statsCountingMode = 'unique';
+    let bookshelfView = 'tile'; // 'tile' | 'list' | 'mini'
+    let statsCountingMode = 'unique'; // 'unique' | 'totalRounds'
+    let statsListView = 'tile'; // 'tile' | 'list' | 'mini' (독서통계 완독 리스트 전용 보기 모드)
     let selectedModalIconId = 'coral-book';
     let autoSaveTimer = null;
 
@@ -1208,6 +1246,7 @@
       renderCalendar();
     }
 
+    // [핵심 수정 1] 4권 이상일 때도 아래 주(Week) 날짜와 절대 겹치거나 삐져나가지 않도록 동적 셀 높이 & min-w-0 적용!
     function renderCalendar() {
       document.getElementById('calendarMonthTitle').textContent = `${calendarYear}년 ${calendarMonth + 1}월`;
       const container = document.getElementById('calendarWeeksContainer');
@@ -1274,7 +1313,7 @@
         const weekEvents = allEvents.filter(ev => ev.startDate <= weekEndStr && ev.endDate >= weekStartStr);
         weekEvents.sort((a, b) => a.startDate.localeCompare(b.startDate));
 
-        const tracks = [[], [], [], []];
+        const tracks = [[], [], [], []]; // 기본 최소 4단 보장 (5권, 6권이면 자동으로 5단, 6단으로 확장)
         const placedSegments = [];
 
         weekEvents.forEach(ev => {
@@ -1314,6 +1353,8 @@
         });
 
         const totalTrackRows = Math.max(4, tracks.length);
+        // 책이 4권이든 6권이든 절대 아래 날짜와 겹치지 않도록 주간 셀 높이를 트랙 수에 비례해 자동 확장!
+        const dynamicMinHeightPx = 38 + (totalTrackRows * 27) + 10;
 
         const dayHeaderCells = week.map((d, idx) => {
           const isToday = d.dateStr === todayStr;
@@ -1322,7 +1363,7 @@
           const opacityClass = d.isCurrentMonth ? '' : 'opacity-35 bg-warmBeige/30';
 
           return `
-            <div class="border-r last:border-r-0 border-amber-100/90 p-1.5 min-h-[118px] sm:min-h-[126px] ${opacityClass}">
+            <div style="min-height: ${dynamicMinHeightPx}px;" class="border-r last:border-r-0 border-amber-100/90 p-1.5 min-w-0 overflow-hidden ${opacityClass}">
               <div class="flex items-center justify-between">
                 <span class="text-xs sm:text-sm font-bold ${dayColor} ${isToday ? 'bg-accentCoral text-white w-6 h-6 rounded-full flex items-center justify-center shadow-2xs' : ''}">
                   ${dayNum}
@@ -1342,22 +1383,24 @@
           rowSegs.forEach(seg => {
             if (seg.startIdx > colCursor) {
               const emptySpan = seg.startIdx - colCursor;
-              rowCellsHtml += `<div style="grid-column: span ${emptySpan} / span ${emptySpan};" class="h-6"></div>`;
+              rowCellsHtml += `<div style="grid-column: span ${emptySpan} / span ${emptySpan};" class="h-[23px] min-w-0"></div>`;
             }
 
-            const roundRadiusClass = `${seg.isTrueStart ? 'rounded-l-lg ml-1' : 'rounded-l-none'} ${seg.isTrueEnd ? 'rounded-r-lg mr-1' : 'rounded-r-none'}`;
+            const roundRadiusClass = `${seg.isTrueStart ? 'rounded-l-md' : 'rounded-l-none'} ${seg.isTrueEnd ? 'rounded-r-md' : 'rounded-r-none'}`;
+            const padWrapClass = `${seg.isTrueStart ? 'pl-1' : 'pl-0'} ${seg.isTrueEnd ? 'pr-1' : 'pr-0'}`;
             const statusPrefix = seg.isCompleted ? '✅' : seg.emoji;
             const statusBadge = seg.isCompleted ? `${seg.round}회독 완독` : `${seg.round}회독 중`;
 
+            // 1칸짜리 좁은 셀에서도 절대 옆으로 삐져나가지 않도록 min-w-0 overflow-hidden 완벽 적용
             rowCellsHtml += `
-              <div style="grid-column: span ${seg.span} / span ${seg.span};" class="h-6 flex items-center">
+              <div style="grid-column: span ${seg.span} / span ${seg.span};" class="h-[23px] flex items-center min-w-0 overflow-hidden ${padWrapClass}">
                 <button onclick="openBookModal('${seg.bookId}', ${seg.roundIndex})"
                   title="${escapeHtml(seg.title)} (${statusBadge}: ${seg.startDate} ~ ${seg.endDate})"
-                  class="cal-bar w-full h-5 sm:h-[22px] px-2 flex items-center gap-1 text-[11px] sm:text-xs font-bold truncate border shadow-2xs ${roundRadiusClass}"
+                  class="cal-bar w-full h-[21px] px-1.5 flex items-center gap-1 text-[11px] font-bold border shadow-2xs min-w-0 overflow-hidden ${roundRadiusClass}"
                   style="background-color: ${seg.colorTheme.bg}; border-color: ${seg.colorTheme.border}; color: ${seg.colorTheme.text};">
-                  <span>${statusPrefix}</span>
-                  <span class="truncate">${escapeHtml(seg.title)}</span>
-                  <span class="opacity-75 text-[10px] shrink-0">(${seg.round}회)</span>
+                  <span class="shrink-0 text-[10px]">${statusPrefix}</span>
+                  <span class="truncate flex-1 text-left leading-none">${escapeHtml(seg.title)}</span>
+                  ${seg.span >= 2 ? `<span class="opacity-75 text-[10px] shrink-0 leading-none">(${seg.round}회)</span>` : ''}
                 </button>
               </div>
             `;
@@ -1366,16 +1409,16 @@
 
           if (colCursor < 7) {
             const remainSpan = 7 - colCursor;
-            rowCellsHtml += `<div style="grid-column: span ${remainSpan} / span ${remainSpan};" class="h-6"></div>`;
+            rowCellsHtml += `<div style="grid-column: span ${remainSpan} / span ${remainSpan};" class="h-[23px] min-w-0"></div>`;
           }
 
-          trackRowsHtml += `<div class="grid grid-cols-7 gap-y-1 pointer-events-auto">${rowCellsHtml}</div>`;
+          trackRowsHtml += `<div class="grid grid-cols-7 w-full pointer-events-auto">${rowCellsHtml}</div>`;
         }
 
         return `
-          <div class="relative">
-            <div class="grid grid-cols-7">${dayHeaderCells}</div>
-            <div class="absolute inset-x-0 top-8 bottom-1 flex flex-col gap-1 pointer-events-none">
+          <div class="relative overflow-hidden" style="min-height: ${dynamicMinHeightPx}px;">
+            <div class="grid grid-cols-7 w-full">${dayHeaderCells}</div>
+            <div class="absolute inset-x-0 top-8 bottom-1.5 flex flex-col gap-1 pointer-events-none">
               ${trackRowsHtml}
             </div>
           </div>
@@ -1612,6 +1655,21 @@
       renderStats();
     }
 
+    // [핵심 추가 3] 독서통계 하단 완독 리스트의 보기 모드 전환 함수 (기본 타일 / 간단 모드 / 미니 타일)
+    function setStatsListView(viewMode) {
+      statsListView = viewMode;
+      document.querySelectorAll('.stats-view-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-cozyBrown', 'shadow-sm');
+        btn.classList.add('text-gray-600');
+      });
+      const activeBtn = document.getElementById(`statsViewBtn-${viewMode}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'text-cozyBrown', 'shadow-sm');
+        activeBtn.classList.remove('text-gray-600');
+      }
+      renderStats();
+    }
+
     function renderStats() {
       const selectedYear = parseInt(document.getElementById('statsYearSelect').value, 10) || new Date().getFullYear();
       const selectedMonth = document.getElementById('statsMonthSelect').value;
@@ -1679,108 +1737,138 @@
       const listContainer = document.getElementById('statsCompletedListContainer');
       const periodLabel = selectedMonth === 'all' ? `${selectedYear}년 전체` : `${selectedYear}년 ${selectedMonth}월`;
 
-      if (statsCountingMode === 'unique') {
-        const uniqueCompletedItems = [];
-        let totalUniquePages = 0;
+      // 통계 완독 리스트에 표시할 공통 아이템 배열 구성
+      let displayItems = [];
 
+      if (statsCountingMode === 'unique') {
+        let totalUniquePages = 0;
         books.forEach(book => {
           const matchedRounds = (book.readings || []).filter(
             r => r.status === 'completed' && r.endDate && r.endDate.startsWith(periodPrefix)
           );
           if (matchedRounds.length > 0) {
-            uniqueCompletedItems.push({ book, matchedRounds });
+            const latestR = matchedRounds[matchedRounds.length - 1];
+            const totalBookCompletedCount = (book.readings || []).filter(r => r.status === 'completed').length;
+            displayItems.push({
+              book,
+              roundIndex: (book.readings || []).indexOf(latestR),
+              endDate: latestR.endDate,
+              memo: latestR.memo,
+              badgeText: `📗 1권 인정 (누적 ${totalBookCompletedCount}회독)`,
+              shortBadge: `${totalBookCompletedCount}회독`
+            });
             totalUniquePages += Number(book.totalPages || 0);
           }
         });
 
-        uniqueCompletedItems.sort((a, b) => {
-          const lastA = a.matchedRounds[a.matchedRounds.length - 1].endDate;
-          const lastB = b.matchedRounds[b.matchedRounds.length - 1].endDate;
-          return lastB.localeCompare(lastA);
-        });
+        displayItems.sort((a, b) => b.endDate.localeCompare(a.endDate));
 
-        document.getElementById('statsTotalBooks').textContent = `${uniqueCompletedItems.length}권`;
+        document.getElementById('statsTotalBooks').textContent = `${displayItems.length}권`;
         document.getElementById('statsTotalPages').textContent = `${totalUniquePages.toLocaleString()} p`;
-        document.getElementById('statsCompletedListTitle').textContent = `${periodLabel} 완독 (${uniqueCompletedItems.length}권)`;
-
-        if (uniqueCompletedItems.length === 0) {
-          listContainer.innerHTML = `<div class="col-span-full text-center py-8 text-sm text-gray-400">해당 기간에 완독한 도서가 없습니다.</div>`;
-        } else {
-          listContainer.innerHTML = uniqueCompletedItems.map(({ book, matchedRounds }) => {
-            const icon = getIconObj(book.iconId);
-            const latestR = matchedRounds[matchedRounds.length - 1];
-            const totalBookCompletedCount = (book.readings || []).filter(r => r.status === 'completed').length;
-
-            return `
-              <div onclick="openBookModal('${book.id}', ${(book.readings || []).indexOf(latestR)})"
-                class="p-4 rounded-2xl bg-warmBeige/40 hover:bg-warmBeige border border-amber-200/80 flex items-start gap-3.5 cursor-pointer transition">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
-                  style="background-color: ${icon.bg}; border-color: ${icon.border};">
-                  ${icon.emoji}
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
-                    <h4 class="font-title text-base text-cozyBrown truncate">${escapeHtml(book.title)}</h4>
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200">
-                      📗 1권 인정 (누적 ${totalBookCompletedCount}회독)
-                    </span>
-                  </div>
-                  <p class="text-xs text-gray-500 mb-1.5">${escapeHtml(book.author)} · ${book.totalPages}p · 최근 완독일: <strong>${latestR.endDate}</strong></p>
-                  <p class="text-xs text-gray-700 bg-white/80 px-3 py-1.5 rounded-xl border border-amber-100 truncate">
-                    💬 ${latestR.memo ? escapeHtml(latestR.memo) : '작성된 독후감 메모가 없습니다.'}
-                  </p>
-                </div>
-              </div>
-            `;
-          }).join('');
-        }
+        document.getElementById('statsCompletedListTitle').textContent = `${periodLabel} 완독 (${displayItems.length}권)`;
       } else {
-        const allCompletedRounds = [];
         let totalPagesSum = 0;
-
         books.forEach(book => {
           (book.readings || []).forEach((r, idx) => {
             if (r.status === 'completed' && r.endDate && r.endDate.startsWith(periodPrefix)) {
-              allCompletedRounds.push({ book, reading: r, roundIndex: idx });
+              displayItems.push({
+                book,
+                roundIndex: idx,
+                endDate: r.endDate,
+                memo: r.memo,
+                badgeText: `🔁 ${r.round}회독 완독`,
+                shortBadge: `${r.round}회독`
+              });
               totalPagesSum += Number(book.totalPages || 0);
             }
           });
         });
 
-        allCompletedRounds.sort((a, b) => b.reading.endDate.localeCompare(a.reading.endDate));
+        displayItems.sort((a, b) => b.endDate.localeCompare(a.endDate));
 
-        document.getElementById('statsTotalBooks').textContent = `${allCompletedRounds.length}건`;
+        document.getElementById('statsTotalBooks').textContent = `${displayItems.length}건`;
         document.getElementById('statsTotalPages').textContent = `${totalPagesSum.toLocaleString()} p`;
-        document.getElementById('statsCompletedListTitle').textContent = `${periodLabel} 완독 (${allCompletedRounds.length}건 · 다회독 합산)`;
+        document.getElementById('statsCompletedListTitle').textContent = `${periodLabel} 완독 (${displayItems.length}건 · 다회독 합산)`;
+      }
 
-        if (allCompletedRounds.length === 0) {
-          listContainer.innerHTML = `<div class="col-span-full text-center py-8 text-sm text-gray-400">해당 기간에 완독한 기록이 없습니다.</div>`;
-        } else {
-          listContainer.innerHTML = allCompletedRounds.map(({ book, reading, roundIndex }) => {
-            const icon = getIconObj(book.iconId);
-            return `
-              <div onclick="openBookModal('${book.id}', ${roundIndex})"
-                class="p-4 rounded-2xl bg-warmBeige/40 hover:bg-warmBeige border border-amber-200/80 flex items-start gap-3.5 cursor-pointer transition">
-                <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
+      if (displayItems.length === 0) {
+        listContainer.className = 'w-full';
+        listContainer.innerHTML = `<div class="text-center py-8 text-sm text-gray-400">해당 기간에 완독한 도서가 없습니다.</div>`;
+        return;
+      }
+
+      // 선택된 statsListView ('tile' | 'list' | 'mini')에 맞춰 렌더링!
+      if (statsListView === 'tile') {
+        listContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+        listContainer.innerHTML = displayItems.map(item => {
+          const icon = getIconObj(item.book.iconId);
+          return `
+            <div onclick="openBookModal('${item.book.id}', ${item.roundIndex})"
+              class="p-4 rounded-2xl bg-warmBeige/40 hover:bg-warmBeige border border-amber-200/80 flex items-start gap-3.5 cursor-pointer transition">
+              <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
+                style="background-color: ${icon.bg}; border-color: ${icon.border};">
+                ${icon.emoji}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
+                  <h4 class="font-title text-base text-cozyBrown truncate">${escapeHtml(item.book.title)}</h4>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200 shrink-0">
+                    ${item.badgeText}
+                  </span>
+                </div>
+                <p class="text-xs text-gray-500 mb-1.5">${escapeHtml(item.book.author)} · ${item.book.totalPages}p · 완독일: <strong>${item.endDate}</strong></p>
+                <p class="text-xs text-gray-700 bg-white/80 px-3 py-1.5 rounded-xl border border-amber-100 truncate">
+                  💬 ${item.memo ? escapeHtml(item.memo) : '작성된 독후감 메모가 없습니다.'}
+                </p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else if (statsListView === 'list') {
+        listContainer.className = 'space-y-2';
+        listContainer.innerHTML = displayItems.map(item => {
+          const icon = getIconObj(item.book.iconId);
+          return `
+            <div onclick="openBookModal('${item.book.id}', ${item.roundIndex})"
+              class="bg-warmBeige/30 hover:bg-warmBeige/80 rounded-2xl px-4 py-2.5 border border-amber-200/80 flex flex-wrap items-center justify-between gap-3 cursor-pointer transition">
+              <div class="flex items-center gap-3 min-w-[200px] flex-1">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-lg border shrink-0"
                   style="background-color: ${icon.bg}; border-color: ${icon.border};">
                   ${icon.emoji}
                 </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center justify-between gap-1 mb-1">
-                    <h4 class="font-title text-base text-cozyBrown truncate">${escapeHtml(book.title)}</h4>
-                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softYellow text-amber-950 border border-amber-300">
-                      🔁 ${reading.round}회독 완독
-                    </span>
+                <div class="truncate">
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-title text-sm sm:text-base text-cozyBrown truncate">${escapeHtml(item.book.title)}</h4>
+                    <span class="text-xs text-gray-500 shrink-0">| ${escapeHtml(item.book.author)}</span>
                   </div>
-                  <p class="text-xs text-gray-500 mb-1.5">${escapeHtml(book.author)} · 완독일: <strong>${reading.endDate}</strong></p>
-                  <p class="text-xs text-gray-700 bg-white/80 px-3 py-1.5 rounded-xl border border-amber-100 truncate">
-                    💬 ${reading.memo ? escapeHtml(reading.memo) : '작성된 독후감 메모가 없습니다.'}
-                  </p>
+                  <p class="text-xs text-gray-500 truncate">💬 ${item.memo ? escapeHtml(item.memo) : '메모 없음'}</p>
                 </div>
               </div>
-            `;
-          }).join('');
-        }
+              <div class="flex items-center gap-2.5 text-xs shrink-0">
+                <span class="text-gray-600">완독일: <strong>${item.endDate}</strong></span>
+                <span class="px-2.5 py-0.5 rounded-full font-bold bg-softMint text-teal-900 border border-teal-200">${item.shortBadge}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else if (statsListView === 'mini') {
+        listContainer.className = 'grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-1.5 bg-warmBeige/50 p-3 rounded-3xl border border-amber-200/80';
+        listContainer.innerHTML = displayItems.map(item => {
+          const icon = getIconObj(item.book.iconId);
+          return `
+            <div onclick="openBookModal('${item.book.id}', ${item.roundIndex})"
+              title="${escapeHtml(item.book.title)} (완독일: ${item.endDate})"
+              class="rounded-xl p-2.5 border shadow-2xs hover:scale-105 hover:z-10 transition cursor-pointer flex flex-col items-center justify-between text-center aspect-square"
+              style="background-color: ${icon.bg}; border-color: ${icon.border};">
+              <div class="w-full flex items-center justify-between text-[10px] font-bold px-0.5">
+                <span class="px-1.5 py-0.2 rounded bg-white/80 text-cozyBrown">${item.shortBadge}</span>
+                <span>✅</span>
+              </div>
+              <div class="text-2xl sm:text-3xl my-0.5">${icon.emoji}</div>
+              <p class="font-title text-xs text-cozyBrown leading-tight line-clamp-2 w-full">${escapeHtml(item.book.title)}</p>
+            </div>
+          `;
+        }).join('');
       }
     }
 
@@ -2010,9 +2098,6 @@
       closeGoalModal();
     }
 
-    // ==========================================================
-    // 7. GitHub 클라우드 자동 동기화 (CORS 차단 버그 제거 & 정밀 에러 진단기 탑재!)
-    // ==========================================================
     function toggleTokenVisibility() {
       const input = document.getElementById('ghTokenInput');
       const btn = document.getElementById('toggleTokenBtn');
@@ -2071,13 +2156,11 @@
       return decodeURIComponent(escape(atob(b64.replace(/\s/g, ''))));
     }
 
-    // 입력값 정리 도우미 (혹시 앞뒤 공백이나 전체 주소가 들어왔을 때 자동 정제)
     function sanitizeAndSaveConfig() {
       let owner = document.getElementById('ghOwnerInput').value.trim();
       let repo = document.getElementById('ghRepoInput').value.trim();
       let token = document.getElementById('ghTokenInput').value.replace(/\s+/g, '');
 
-      // 혹시 저장소 칸에 URL을 넣었을 경우 자동 추출
       if (repo.includes('github.com/')) {
         const parts = repo.split('github.com/')[1].split('/');
         if (parts[0]) owner = parts[0];
@@ -2114,7 +2197,6 @@
       setSyncLog('연동이 해제되었습니다. 현재 기기 내부에만 저장됩니다.', false);
     }
 
-    // [핵심 수정] CORS 에러를 유발하던 Cache-Control 헤더를 제거하고, 정확한 원인을 알려주는 함수
     async function autoLoadFromGithub(showAlert = false) {
       const cfg = getGithubConfig();
       if (!cfg || !cfg.owner || !cfg.repo || !cfg.token) return;
@@ -2123,7 +2205,6 @@
       const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/reading-data.json`;
 
       try {
-        // 중요: CORS 프리플라이트 차단을 막기 위해 Cache-Control 커스텀 헤더 제거!
         const res = await fetch(url, {
           method: 'GET',
           cache: 'no-store',
@@ -2133,7 +2214,6 @@
           }
         });
 
-        // 아직 reading-data.json 파일이 없는 첫 연동 상태 (404) -> 자동으로 첫 파일 생성!
         if (res.status === 404) {
           setSyncLog('🔄 저장소에 아직 데이터 파일이 없어 첫 클라우드 파일을 생성 중입니다...', false);
           const created = await uploadDataToGithubInternal('Initial reading data creation');
@@ -2193,7 +2273,6 @@
       const baseUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/reading-data.json`;
 
       try {
-        // 기존 파일의 sha 조회 (CORS 안전 요청)
         let sha = undefined;
         const getRes = await fetch(baseUrl, {
           method: 'GET',
