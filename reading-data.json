@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T07:33:05.936Z",
+  "updatedAt": "2026-11-08T07:33:16.383Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -18,6 +18,15 @@
           "endDate": "2026-09-18",
           "currentPage": 400,
           "memo": "국제 정세와 매크로를 보는 눈이 중요하다"
+        },
+        {
+          "round": 2,
+          "status": "reading",
+          "startDate": "2026-11-08",
+          "targetDate": "2026-11-22",
+          "endDate": "",
+          "currentPage": 0,
+          "memo": ""
         }
       ]
     },
