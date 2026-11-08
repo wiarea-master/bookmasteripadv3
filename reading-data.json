@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-08T07:13:10.709Z",
+  "updatedAt": "2026-11-08T07:13:32.048Z",
   "yearlyGoal": 30,
   "books": [
     {
@@ -70,7 +70,8 @@
           "memo": ""
         }
       ],
-      "coverBg": "#E0F2FE"
+      "coverBg": "#E0F2FE",
+      "iconId": "chart-book"
     },
     {
       "id": "book_1794061773328",
