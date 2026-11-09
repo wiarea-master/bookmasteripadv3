@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T13:20:22.593Z",
+  "updatedAt": "2026-11-09T13:20:41.003Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -322,7 +322,7 @@
       "author": "Stephen Covey",
       "totalPages": 495,
       "purchaseDate": "2026-11-05",
-      "iconId": "brown-book",
+      "iconId": "sky-book",
       "readings": [
         {
           "round": 1,
