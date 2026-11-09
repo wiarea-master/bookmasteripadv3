@@ -111,6 +111,12 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   </style>
 </head>
 <body class="min-h-screen pb-16 selection:bg-softCoral selection:text-cozyBrown">
@@ -162,22 +168,26 @@
       </div>
     </header>
 
-    <!-- 2. 네비게이션 탭 메뉴 -->
-    <nav class="mb-6 bg-warmBeige/90 p-1.5 rounded-2xl border border-amber-200/70 shadow-sm grid grid-cols-4 gap-1.5">
+    <!-- 2. 네비게이션 탭 메뉴 (5개 탭: 읽는 중 / 내 책장 / 발췌·독후감 / 독서통계 / 관리·동기화) -->
+    <nav class="mb-6 bg-warmBeige/90 p-1.5 rounded-2xl border border-amber-200/70 shadow-sm grid grid-cols-5 gap-1 sm:gap-1.5">
       <button onclick="switchTab('reading')" id="tabBtn-reading"
-        class="tab-btn py-3 px-2 rounded-xl font-title text-sm sm:text-base flex items-center justify-center gap-1.5 transition bg-white text-cozyBrown shadow-sm">
+        class="tab-btn py-3 px-1.5 rounded-xl font-title text-xs sm:text-base flex items-center justify-center gap-1 sm:gap-1.5 transition bg-white text-cozyBrown shadow-sm">
         <span>📖</span><span>읽는 중</span>
       </button>
       <button onclick="switchTab('bookshelf')" id="tabBtn-bookshelf"
-        class="tab-btn py-3 px-2 rounded-xl font-title text-sm sm:text-base flex items-center justify-center gap-1.5 transition text-amber-900/70 hover:bg-white/50">
+        class="tab-btn py-3 px-1.5 rounded-xl font-title text-xs sm:text-base flex items-center justify-center gap-1 sm:gap-1.5 transition text-amber-900/70 hover:bg-white/50">
         <span>📚</span><span>내 책장</span>
       </button>
+      <button onclick="switchTab('notes')" id="tabBtn-notes"
+        class="tab-btn py-3 px-1.5 rounded-xl font-title text-xs sm:text-base flex items-center justify-center gap-1 sm:gap-1.5 transition text-amber-900/70 hover:bg-white/50">
+        <span>✨</span><span>발췌·독후감</span>
+      </button>
       <button onclick="switchTab('stats')" id="tabBtn-stats"
-        class="tab-btn py-3 px-2 rounded-xl font-title text-sm sm:text-base flex items-center justify-center gap-1.5 transition text-amber-900/70 hover:bg-white/50">
+        class="tab-btn py-3 px-1.5 rounded-xl font-title text-xs sm:text-base flex items-center justify-center gap-1 sm:gap-1.5 transition text-amber-900/70 hover:bg-white/50">
         <span>📊</span><span>독서통계</span>
       </button>
       <button onclick="switchTab('settings')" id="tabBtn-settings"
-        class="tab-btn py-3 px-2 rounded-xl font-title text-sm sm:text-base flex items-center justify-center gap-1.5 transition text-amber-900/70 hover:bg-white/50">
+        class="tab-btn py-3 px-1.5 rounded-xl font-title text-xs sm:text-base flex items-center justify-center gap-1 sm:gap-1.5 transition text-amber-900/70 hover:bg-white/50">
         <span>⚙️</span><span>관리·동기화</span>
       </button>
     </nav>
@@ -233,7 +243,7 @@
         </div>
       </div>
 
-      <!-- 구글 캘린더 스타일 독서 현황 캘린더 (4권 이상일 때도 절대 삐져나가지 않도록 동적 높이 적용!) -->
+      <!-- 구글 캘린더 스타일 독서 현황 캘린더 -->
       <div class="bg-white rounded-3xl p-4 sm:p-6 border border-amber-200/80 shadow-sm overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div class="flex items-center gap-2">
@@ -278,7 +288,7 @@
             <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-softCoral inline-block border border-red-300"></span> 📖 읽는 중 (시작일~오늘)</span>
             <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded bg-softMint inline-block border border-teal-300"></span> ✅ 완독 기록 보존 (시작일~완독일)</span>
           </div>
-          <span>💡 캘린더의 책 띠를 터치하면 상세 수정/진도 카드로 연결됩니다</span>
+          <span>💡 캘린더의 책 띠를 터치하면 상세 수정/발췌/독후감 창으로 연결됩니다</span>
         </div>
       </div>
 
@@ -289,7 +299,7 @@
             <span class="text-2xl">✍️</span>
             <h2 class="font-title text-xl text-cozyBrown">지금 읽고 있는 책 진도 카드</h2>
           </div>
-          <span class="text-xs text-gray-500">슬라이더를 움직이거나 페이지를 입력해 진도를 기록하세요</span>
+          <span class="text-xs text-gray-500">슬라이더를 움직이거나 '발췌·독후감·사진' 버튼을 눌러 기록을 남겨보세요</span>
         </div>
 
         <div id="readingCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -349,7 +359,40 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- [탭 3] 📊 독서통계 (1월~12월 고정 그래프 & 완독 리스트 보기 모드 추가!) -->
+    <!-- [탭 3 - 신규] ✨ 발췌·독후감·사진 모아보기 (독서노트 라운지) -->
+    <!-- ========================================================== -->
+    <section id="tabContent-notes" class="hidden space-y-5">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/80 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 class="font-title text-xl text-cozyBrown">✨ 나의 문장 발췌 · 심층 독후감 · 사진 수집함</h2>
+          <p class="text-xs text-gray-500 mt-0.5">책마다 기록한 밑줄 발췌 문장, 긴 호흡의 독후감, 그리고 초경량 인증 사진들을 한눈에 감상하세요.</p>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-warmBeige/70 p-1 rounded-xl border border-amber-200/80">
+          <button onclick="setNotesFilter('all')" id="notesFilterBtn-all"
+            class="notes-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition bg-white text-cozyBrown shadow-sm">
+            🌈 전체 보기
+          </button>
+          <button onclick="setNotesFilter('quotes')" id="notesFilterBtn-quotes"
+            class="notes-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
+            🔖 문장 발췌만
+          </button>
+          <button onclick="setNotesFilter('reviews')" id="notesFilterBtn-reviews"
+            class="notes-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
+            📝 독후감만
+          </button>
+          <button onclick="setNotesFilter('photos')" id="notesFilterBtn-photos"
+            class="notes-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold transition text-gray-600 hover:bg-white/60">
+            📸 사진 갤러리
+          </button>
+        </div>
+      </div>
+
+      <div id="notesArchiveContainer" class="space-y-4"></div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- [탭 4] 📊 독서통계 (1월~12월 고정 그래프 & 완독 리스트 3단 뷰) -->
     <!-- ========================================================== -->
     <section id="tabContent-stats" class="hidden space-y-6">
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/80 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -425,15 +468,13 @@
         <div id="monthlyChartContainer" class="grid grid-cols-12 gap-2 sm:gap-3 items-end h-48 pt-6 pb-2 px-2 bg-warmBeige/40 rounded-2xl border border-amber-100"></div>
       </div>
 
-      <!-- [핵심 추가] 독서통계 하단 완독 도서 리스트 + 보기 방식 전환 버튼 (기본 타일 / 간단 리스트 / 1/5 미니 타일) -->
       <div class="bg-white rounded-3xl p-5 sm:p-6 border border-amber-200/80 shadow-sm">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
             <h3 id="statsCompletedListTitle" class="font-title text-xl text-cozyBrown">2026년 전체 완독 (0권)</h3>
-            <p class="text-xs text-gray-500 mt-0.5">카드를 누르면 상세 독후감과 회독 기록을 볼 수 있습니다</p>
+            <p class="text-xs text-gray-500 mt-0.5">카드를 누르면 상세 독후감·발췌·사진과 회독 기록을 볼 수 있습니다</p>
           </div>
 
-          <!-- 통계 완독 리스트 전용 보기 모드 토글 -->
           <div class="flex items-center gap-1.5 bg-warmBeige/70 p-1 rounded-xl border border-amber-200/80">
             <span class="text-xs font-bold text-cozyBrown px-2">보기:</span>
             <button onclick="setStatsListView('tile')" id="statsViewBtn-tile"
@@ -456,7 +497,7 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- [탭 4] ⚙️ 관리·동기화 -->
+    <!-- [탭 5] ⚙️ 관리·동기화 -->
     <!-- ========================================================== -->
     <section id="tabContent-settings" class="hidden space-y-6">
 
@@ -466,7 +507,7 @@
             <span class="text-3xl">☁️</span>
             <div>
               <h2 class="font-title text-xl text-cozyBrown">GitHub 클라우드 자동 동기화 (아이패드 ↔ PC 실시간 연동)</h2>
-              <p class="text-xs sm:text-sm text-gray-600">한 번만 설정해 두면 책을 수정할 때마다 GitHub에 자동 저장되고, 다른 기기에서 접속할 때 최신 정보로 자동 업데이트됩니다.</p>
+              <p class="text-xs sm:text-sm text-gray-600">한 번만 설정해 두면 책 진도, 발췌 문장, 독후감, 초경량 사진을 수정할 때마다 GitHub에 자동 저장되고 다른 기기에서 자동 업데이트됩니다.</p>
             </div>
           </div>
         </div>
@@ -515,7 +556,7 @@
         </div>
 
         <div id="ghSyncLogBox" class="mt-3 px-4 py-3 rounded-xl bg-softMint/40 border border-teal-200/80 text-xs font-bold text-teal-900">
-          <p id="ghSyncLogText">💡 안내: 아이디(wiarea-master)와 저장소(bookmasteripadv3)가 기본 세팅되어 있습니다. 토큰을 넣고 연결 버튼을 눌러주세요.</p>
+          <p id="ghSyncLogText">💡 안내: 기존 백업 파일과 100% 호환되며, 첨부 사진은 40~60KB 수준으로 자동 초경량 압축되어 GitHub 서버 부담이 전혀 없습니다.</p>
         </div>
       </div>
 
@@ -523,8 +564,8 @@
         <div class="flex items-center gap-2.5 mb-3">
           <span class="text-2xl">📁</span>
           <div>
-            <h2 class="font-title text-xl text-cozyBrown">구글 드라이브 및 파일 수동 백업 / 불러오기</h2>
-            <p class="text-xs sm:text-sm text-gray-600">아이패드에서 버튼을 누르면 시스템 공유/파일 창이 열려 내 <strong>구글 드라이브(Google Drive)의 원하는 폴더</strong>로 바로 저장하거나 불러올 수 있습니다.</p>
+            <h2 class="font-title text-xl text-cozyBrown">구글 드라이브 및 파일 수동 백업 / 불러오기 (기존 백업 파일 호환)</h2>
+            <p class="text-xs sm:text-sm text-gray-600">이전에 저장해 두셨던 백업 JSON 파일도 그대로 불러올 수 있으며, 새로 내보낼 때는 발췌·독후감·사진까지 모두 하나로 묶여 저장됩니다.</p>
           </div>
         </div>
 
@@ -542,7 +583,7 @@
             <span class="text-2xl">📂</span>
             <div class="text-left">
               <div>구글 드라이브에서 백업 파일 불러오기</div>
-              <div class="text-xs font-sans font-normal text-orange-800">저장해 둔 .json 백업 파일을 선택하세요</div>
+              <div class="text-xs font-sans font-normal text-orange-800">기존 백업 파일(.json)도 100% 호환 복원됩니다</div>
             </div>
             <input type="file" id="importJsonFileInput" accept=".json,application/json" onchange="importJsonFromFile(event)" class="hidden" />
           </label>
@@ -564,10 +605,10 @@
   </div>
 
   <!-- ========================================================== -->
-  <!-- [모달 1] 새 책 등록 / 상세 수정 모달 (아이패드 날짜 입력칸 겹침 완벽 해결!) -->
+  <!-- [모달 1] 새 책 등록 / 상세 수정 모달 (24종 아이콘 유지 + 발췌·독후감·초경량 사진 첨부 통합!) -->
   <!-- ========================================================== -->
-  <div id="bookModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-cream rounded-3xl max-w-2xl w-full p-5 sm:p-7 border-2 border-amber-200 shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
+  <div id="bookModal" class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-cream rounded-3xl max-w-3xl w-full p-5 sm:p-7 border-2 border-amber-200 shadow-2xl my-6 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-amber-200/80 pb-3 mb-4">
         <h3 id="bookModalTitle" class="font-title text-xl sm:text-2xl text-cozyBrown">➕ 새 책 등록하기</h3>
         <button onclick="closeBookModal()" class="w-9 h-9 rounded-full bg-warmBeige hover:bg-amber-200 font-bold text-cozyBrown">✕</button>
@@ -576,11 +617,13 @@
       <input type="hidden" id="modalBookId" />
       <input type="hidden" id="modalRoundIndex" />
 
+      <!-- 1. 위아래님께서 좋아하시는 24종 컬러·모양 책 아이콘 선택 팔레트 (100% 그대로 유지!) -->
       <div class="mb-4">
         <label class="block text-xs font-bold text-cozyBrown mb-2">🎨 책 아이콘 및 컬러 스타일 선택 (24종)</label>
         <div id="iconPaletteContainer" class="grid grid-cols-6 sm:grid-cols-8 gap-2 p-3 rounded-2xl bg-warmBeige/70 border border-amber-200/80 max-h-44 overflow-y-auto"></div>
       </div>
 
+      <!-- 2. 책 기본 정보 -->
       <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-4">
         <div class="sm:col-span-6 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">📖 책 제목 *</label>
@@ -599,6 +642,7 @@
         </div>
       </div>
 
+      <!-- 3. 회독 선택 탭 -->
       <div id="modalRoundsSection" class="mb-4 hidden">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
           <label class="text-xs font-bold text-cozyBrown">🔁 회독 기록 선택 (1회독 ~ N회독)</label>
@@ -610,7 +654,7 @@
         <div id="modalRoundTabs" class="flex flex-wrap gap-2"></div>
       </div>
 
-      <!-- [핵심 수정] 아이패드에서 양쪽 날짜 칸이 절대 겹치지 않도록 min-w-0 overflow-hidden 및 정렬 보정 -->
+      <!-- 4. 날짜 입력 (아이패드 겹침 방지 min-w-0 overflow-hidden 적용 완료) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 bg-warmBeige/50 p-4 rounded-2xl border border-amber-200/70">
         <div class="min-w-0 overflow-hidden">
           <div class="flex items-center justify-between min-h-[26px] mb-1">
@@ -649,21 +693,90 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-5">
+      <!-- 5. 현재 페이지 & 한줄 요약 메모 (기존 메모 호환) -->
+      <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-4">
         <div class="sm:col-span-4 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">🔖 현재 읽은 페이지</label>
           <input type="number" id="modalCurrentPage" min="0" placeholder="0"
             class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-amber-300 text-sm font-bold focus:outline-none" />
-          <p class="text-[11px] text-gray-500 mt-1">완독 날짜를 비워두면 이 페이지로 진도가 표시됩니다.</p>
+          <p class="text-[11px] text-gray-500 mt-1">완독일을 비워두면 이 페이지로 진도가 표시됩니다.</p>
         </div>
         <div class="sm:col-span-8 min-w-0">
-          <label class="block text-xs font-bold text-cozyBrown mb-1">📝 4. 간단한 독후감 메모 (회독별 저장)</label>
-          <textarea id="modalMemo" rows="3" placeholder="이 책을 읽으며 느낀 점이나 기억하고 싶은 문장을 자유롭게 적어보세요..."
-            class="w-full px-3.5 py-2 rounded-xl bg-white border border-amber-300 text-sm focus:outline-none focus:border-accentCoral"></textarea>
+          <label class="block text-xs font-bold text-cozyBrown mb-1">💬 4. 한줄 요약평 (카드 미리보기용 짧은 메모)</label>
+          <input type="text" id="modalMemo" placeholder="이 회독의 핵심 한줄평을 적어보세요..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-amber-300 text-sm focus:outline-none focus:border-accentCoral" />
         </div>
       </div>
 
-      <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-amber-200/80">
+      <!-- ========================================================== -->
+      <!-- [신규 기능 통합 구역] 1. 문장 발췌 / 2. 심층 독후감 / 3. 초경량 사진 첨부 -->
+      <!-- ========================================================== -->
+      <div id="modalDeepNotesSection" class="space-y-4 mt-5 pt-4 border-t-2 border-dashed border-amber-200">
+
+        <!-- (A) 🔖 1. 문장 발췌 (인상 깊은 구절 수집) -->
+        <div class="bg-softYellow/35 p-4 rounded-2xl border border-amber-200/90">
+          <div class="flex items-center justify-between mb-2">
+            <label class="font-title text-base text-cozyBrown flex items-center gap-1.5">
+              <span>🔖</span><span>인상 깊은 문장 발췌 (밑줄 구절 수집)</span>
+            </label>
+            <span id="modalQuotesCountBadge" class="text-xs font-bold text-amber-900 bg-white px-2.5 py-0.5 rounded-full border border-amber-200">0개</span>
+          </div>
+
+          <!-- 새 발췌 문장 추가 입력창 -->
+          <div class="flex flex-col sm:flex-row gap-2 mb-3">
+            <div class="flex items-center gap-1 sm:w-28 shrink-0">
+              <span class="text-xs font-bold text-amber-900">p.</span>
+              <input type="number" id="newQuotePageInput" min="1" placeholder="페이지"
+                class="w-full px-2.5 py-2 rounded-xl bg-white border border-amber-300 text-xs font-bold text-center focus:outline-none" />
+            </div>
+            <input type="text" id="newQuoteTextInput" placeholder="기억하고 싶은 책 속의 문장을 입력하고 '추가'를 눌러주세요..."
+              onkeydown="if(event.key==='Enter'){event.preventDefault(); addQuoteInModal();}"
+              class="flex-1 px-3.5 py-2 rounded-xl bg-white border border-amber-300 text-xs sm:text-sm focus:outline-none focus:border-accentCoral" />
+            <button type="button" onclick="addQuoteInModal()"
+              class="px-4 py-2 rounded-xl bg-cozyBrown hover:bg-amber-900 text-white font-bold text-xs shrink-0 transition">
+              ➕ 문장 추가
+            </button>
+          </div>
+
+          <!-- 등록된 발췌 문장 리스트 -->
+          <div id="modalQuotesListContainer" class="space-y-2 max-h-44 overflow-y-auto"></div>
+        </div>
+
+        <!-- (B) 📝 2. 심층 독후감 (긴 글 서평 에디터) -->
+        <div class="bg-softMint/25 p-4 rounded-2xl border border-teal-200/90">
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="font-title text-base text-cozyBrown flex items-center gap-1.5">
+              <span>📝</span><span>심층 독후감 (긴 호흡의 독서 노트 & 서평)</span>
+            </label>
+            <span class="text-[11px] text-teal-800">줄바꿈과 문단이 그대로 보존됩니다</span>
+          </div>
+          <textarea id="modalReview" rows="5" placeholder="책을 읽으며 떠오른 깊은 생각, 삶에 적용할 점, 전체 서평을 자유롭게 기록해 보세요..."
+            class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-teal-300/80 text-sm leading-relaxed focus:outline-none focus:border-teal-500"></textarea>
+        </div>
+
+        <!-- (C) 📸 3. 초경량 사진 첨부 (자동 40~60KB 압축 엔진) -->
+        <div class="bg-softCoral/25 p-4 rounded-2xl border border-pink-200/90">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+            <div>
+              <label class="font-title text-base text-cozyBrown flex items-center gap-1.5">
+                <span>📸</span><span>초경량 사진 첨부 (책 표지 · 밑줄 페이지 · 독서 인증샷)</span>
+              </label>
+              <p class="text-[11px] text-gray-600">사진을 고르면 브라우저가 <strong>약 40~60KB로 자동 초경량 압축</strong>하여 GitHub 서버 용량 걱정 없이 저장됩니다.</p>
+            </div>
+
+            <label class="px-3.5 py-2 rounded-xl bg-accentCoral hover:bg-red-400 text-white font-title text-xs cursor-pointer shadow-2xs transition shrink-0 flex items-center gap-1">
+              <span>📷 사진 촬영 / 선택</span>
+              <input type="file" id="modalPhotoInput" accept="image/*" multiple onchange="handlePhotoUploadInModal(event)" class="hidden" />
+            </label>
+          </div>
+
+          <div id="modalPhotosGridContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5"></div>
+        </div>
+
+      </div>
+
+      <!-- 모달 하단 저장/삭제 버튼 -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-4 mt-5 border-t border-amber-200/80">
         <button type="button" id="modalDeleteBookBtn" onclick="deleteBookFromModal()"
           class="px-3.5 py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold border border-red-200 transition hidden">
           🗑️ 이 책 삭제
@@ -702,9 +815,23 @@
   </div>
 
   <!-- ========================================================== -->
-  <!-- 자바스크립트 비즈니스 로직 -->
+  <!-- [모달 3 - 신규] 사진 크게 보기 라이트박스 (Photo Lightbox) -->
+  <!-- ========================================================== -->
+  <div id="photoLightboxModal" onclick="closePhotoLightbox()" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+    <div class="max-w-3xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
+      <div class="w-full flex justify-between items-center mb-2 text-white px-2">
+        <span id="lightboxCaption" class="font-title text-base sm:text-lg truncate">사진 보기</span>
+        <button onclick="closePhotoLightbox()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 text-white font-bold">✕</button>
+      </div>
+      <img id="lightboxImage" src="" alt="첨부 사진 확대" class="max-h-[80vh] w-auto rounded-2xl shadow-2xl border-2 border-white/30 object-contain bg-black/40" />
+    </div>
+  </div>
+
+  <!-- ========================================================== -->
+  <!-- 자바스크립트 비즈니스 로직 (생략 없는 전체 구현) -->
   <!-- ========================================================== -->
   <script>
+    // 1. 위아래님께서 선호하시는 24종 컬러·모양 책 아이콘 팔레트 (100% 보존)
     const BOOK_ICONS = [
       { id: 'coral-book', emoji: '📕', bg: '#FFD6D6', border: '#FCA5A5', label: '코랄 레드북' },
       { id: 'mint-book', emoji: '📗', bg: '#D4F4E8', border: '#6EE7B7', label: '민트 그린북' },
@@ -751,11 +878,16 @@
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let bookshelfSort = 'purchaseDate';
-    let bookshelfView = 'tile'; // 'tile' | 'list' | 'mini'
-    let statsCountingMode = 'unique'; // 'unique' | 'totalRounds'
-    let statsListView = 'tile'; // 'tile' | 'list' | 'mini' (독서통계 완독 리스트 전용 보기 모드)
+    let bookshelfView = 'tile';
+    let statsCountingMode = 'unique';
+    let statsListView = 'tile';
+    let notesFilter = 'all'; // 'all' | 'quotes' | 'reviews' | 'photos'
     let selectedModalIconId = 'coral-book';
     let autoSaveTimer = null;
+
+    // 모달 내부에서 편집 중인 임시 발췌(quotes) 및 사진(photos) 배열
+    let modalTempQuotes = [];
+    let modalTempPhotos = [];
 
     function getTodayStr() {
       const now = new Date();
@@ -774,10 +906,60 @@
       return `${y}-${m}-${day}`;
     }
 
+    // [핵심] 기존 백업 파일(reading-data.json 및 수동 백업) 100% 하위 호환 보정 함수
+    function normalizeBooksData(rawBooks) {
+      if (!Array.isArray(rawBooks)) return [];
+      return rawBooks.map((b, idx) => {
+        // 예전 버전에서 coverEmoji만 쓰던 데이터도 24종 아이콘으로 자동 매핑
+        let iconId = b.iconId;
+        if (!iconId && b.coverEmoji) {
+          const found = BOOK_ICONS.find(ic => ic.emoji === b.coverEmoji);
+          iconId = found ? found.id : BOOK_ICONS[idx % BOOK_ICONS.length].id;
+        }
+        if (!iconId) iconId = 'coral-book';
+
+        const readings = Array.isArray(b.readings) && b.readings.length > 0
+          ? b.readings.map((r, rIdx) => ({
+              round: Number(r.round) || (rIdx + 1),
+              status: (r.status === 'completed' && r.endDate) ? 'completed' : 'reading',
+              startDate: r.startDate || getTodayStr(),
+              targetDate: r.targetDate || '',
+              endDate: r.endDate || '',
+              currentPage: Number(r.currentPage) || 0,
+              memo: r.memo || '',
+              review: r.review || '', // 심층 독후감
+              quotes: Array.isArray(r.quotes) ? r.quotes : [], // 문장 발췌 목록
+              photos: Array.isArray(r.photos) ? r.photos : []  // 초경량 사진 목록
+            }))
+          : [{
+              round: 1,
+              status: 'reading',
+              startDate: getTodayStr(),
+              targetDate: '',
+              endDate: '',
+              currentPage: 0,
+              memo: '',
+              review: '',
+              quotes: [],
+              photos: []
+            }];
+
+        return {
+          id: b.id || ('book_' + Date.now() + '_' + idx),
+          title: b.title || '제목 없는 책',
+          author: b.author || '작자 미상',
+          totalPages: Number(b.totalPages) || 300,
+          purchaseDate: b.purchaseDate || '',
+          iconId,
+          readings
+        };
+      });
+    }
+
     function getInitialSampleBooks() {
       const thisYear = new Date().getFullYear();
       const lastYear = thisYear - 1;
-      return [
+      return normalizeBooksData([
         {
           id: 'book_sample_1',
           title: '돈의 심리학',
@@ -793,7 +975,13 @@
               targetDate: `${lastYear}-03-28`,
               endDate: `${lastYear}-03-25`,
               currentPage: 380,
-              memo: '부를 대하는 태도와 장기 복리의 힘을 일깨워준 최고의 명저.'
+              memo: '부를 대하는 태도와 장기 복리의 힘을 일깨워준 최고의 명저.',
+              review: '재테크 기술보다 중요한 것은 돈을 대하는 나의 심리적 태도라는 점을 깊이 깨달았다.\n특히 복리의 마법은 수익률이 아니라 시간을 견디는 인내심에서 나온다는 장이 가장 인상 깊었다.',
+              quotes: [
+                { id: 'q1', page: 112, text: '부를 일구는 것과 부를 유지하는 것은 완전히 다른 기술이다.', createdAt: `${lastYear}-03-20` },
+                { id: 'q2', page: 245, text: '합리적인 것보다 적당한 수준에서 마음 편한 투자가 오래간다.', createdAt: `${lastYear}-03-24` }
+              ],
+              photos: []
             },
             {
               round: 2,
@@ -802,7 +990,12 @@
               targetDate: `${thisYear}-02-20`,
               endDate: `${thisYear}-02-18`,
               currentPage: 380,
-              memo: '두 번째 읽으니 은퇴 현금흐름과 안전마진의 중요성이 더 깊이 다가온다.'
+              memo: '두 번째 읽으니 은퇴 현금흐름과 안전마진의 중요성이 더 깊이 다가온다.',
+              review: '2회독을 하며 우리의 장기 은퇴 현금흐름 계획을 다시 점검해 보았다. 시장의 변동성 속에서도 흔들리지 않는 안전마진을 확보하는 것이 진정한 부의 핵심이다.',
+              quotes: [
+                { id: 'q3', page: 302, text: '계획이 계획대로 되지 않을 때를 대비한 계획이 바로 안전마진이다.', createdAt: `${thisYear}-02-15` }
+              ],
+              photos: []
             },
             {
               round: 3,
@@ -811,7 +1004,10 @@
               targetDate: getOffsetDateStr(8),
               endDate: '',
               currentPage: 215,
-              memo: '3회독 도전 중! 매 장마다 핵심 문장을 노트에 정리하며 읽는 중.'
+              memo: '3회독 도전 중! 매 장마다 핵심 문장을 발췌하며 읽는 중.',
+              review: '',
+              quotes: [],
+              photos: []
             }
           ]
         },
@@ -830,58 +1026,16 @@
               targetDate: `${thisYear}-05-20`,
               endDate: `${thisYear}-05-16`,
               currentPage: 260,
-              memo: '마음의 평정심과 고독을 즐기는 지혜에 대하여.'
-            },
-            {
-              round: 2,
-              status: 'completed',
-              startDate: getOffsetDateStr(-15),
-              targetDate: getOffsetDateStr(-8),
-              endDate: getOffsetDateStr(-9),
-              currentPage: 260,
-              memo: '가을에 다시 읽으니 문장 하나하나가 더 따뜻하게 위로가 된다.'
-            }
-          ]
-        },
-        {
-          id: 'book_sample_3',
-          title: '다정한 것이 살아남는다',
-          author: '브라이언 헤어',
-          totalPages: 420,
-          purchaseDate: getOffsetDateStr(-10),
-          iconId: 'clover-book',
-          readings: [
-            {
-              round: 1,
-              status: 'reading',
-              startDate: getOffsetDateStr(-4),
-              targetDate: getOffsetDateStr(10),
-              endDate: '',
-              currentPage: 110,
-              memo: '협력하는 유전자가 어떻게 인류를 번영하게 했는지 흥미진진하다.'
-            }
-          ]
-        },
-        {
-          id: 'book_sample_4',
-          title: '스토너 (Stoner)',
-          author: '존 윌리엄스',
-          totalPages: 392,
-          purchaseDate: `${lastYear}-10-05`,
-          iconId: 'maple-book',
-          readings: [
-            {
-              round: 1,
-              status: 'completed',
-              startDate: `${lastYear}-10-08`,
-              targetDate: `${lastYear}-10-25`,
-              endDate: `${lastYear}-10-22`,
-              currentPage: 392,
-              memo: '묵묵히 자신의 삶을 살아낸 한 인간의 고요하고도 숭고한 일생.'
+              memo: '마음의 평정심과 고독을 즐기는 지혜에 대하여.',
+              review: '남들의 시선에 흔들리지 않고 나만의 내면을 단단하게 가꾸는 법을 친절하게 풀어낸 책이다.',
+              quotes: [
+                { id: 'q4', page: 88, text: '행복의 9할은 건강에 달려 있다. 건강한 신체에서 평온한 정신이 깃든다.', createdAt: `${thisYear}-05-10` }
+              ],
+              photos: []
             }
           ]
         }
-      ];
+      ]);
     }
 
     function getIconObj(iconId) {
@@ -892,7 +1046,7 @@
       try {
         const savedBooks = localStorage.getItem(STORAGE_KEY_BOOKS);
         if (savedBooks) {
-          books = JSON.parse(savedBooks);
+          books = normalizeBooksData(JSON.parse(savedBooks));
         } else {
           books = getInitialSampleBooks();
           localStorage.setItem(STORAGE_KEY_BOOKS, JSON.stringify(books));
@@ -924,7 +1078,7 @@
 
       const pool = [
         { icon: '☕', cat: 'Cozy Reading Time', text: '따뜻한 차 한 잔과 함께 책장을 넘기는 고요한 시간이 가장 큰 행복입니다.' },
-        { icon: '🌿', cat: 'Daily Inspiration', text: '오늘 읽은 한 줄의 문장이 내일의 나를 더 단단하고 지혜롭게 만들어 줄 거예요.' },
+        { icon: '🌿', cat: 'Daily Inspiration', text: '오늘 발췌한 한 줄의 문장이 내일의 나를 더 단단하고 지혜롭게 만들어 줄 거예요.' },
         { icon: '✨', cat: 'Quiet Moment', text: '바쁜 일상 속에서도 나만의 독서 페이스를 지키는 위아래님을 응원합니다!' },
         { icon: '🦉', cat: 'Deep Wisdom', text: '좋은 책을 세 번 읽으면 그 책의 지혜가 온전히 내 삶이 됩니다.' }
       ];
@@ -1074,6 +1228,10 @@
         const paceInfo = calculateReadingPace(reading.startDate, reading.targetDate, book.totalPages);
         const roundEmoji = reading.round === 1 ? '🌱' : (reading.round === 2 ? '🌿' : '🌳');
 
+        const quotesCnt = (reading.quotes || []).length;
+        const photosCnt = (reading.photos || []).length;
+        const hasReview = Boolean(reading.review && reading.review.trim());
+
         let paceMarkerHtml = '';
         let paceFeedbackHtml = '';
         if (paceInfo) {
@@ -1114,28 +1272,34 @@
         return `
           <div id="readingCard-${book.id}-${reading.round}" class="bg-white rounded-3xl p-5 border border-amber-200/90 shadow-sm flex flex-col justify-between transition">
             <div>
-              <div class="flex items-start justify-between gap-3 mb-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-13 h-13 rounded-2xl flex items-center justify-center text-3xl shrink-0 border shadow-2xs"
+              <div class="flex items-start justify-between gap-2 mb-4">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="rounded-2xl flex items-center justify-center text-3xl shrink-0 border shadow-2xs"
                     style="background-color: ${icon.bg}; border-color: ${icon.border}; width: 52px; height: 52px;">
                     ${icon.emoji}
                   </div>
-                  <div>
+                  <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
                       <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200">
                         ${roundEmoji} ${reading.round}회독 중
                       </span>
-                      <span class="text-xs text-gray-500">시작일: ${reading.startDate}</span>
+                      <span class="text-xs text-gray-500">시작: ${reading.startDate}</span>
                     </div>
-                    <h3 class="font-title text-lg sm:text-xl text-cozyBrown leading-snug">${escapeHtml(book.title)}</h3>
-                    <p class="text-xs text-gray-500">${escapeHtml(book.author)} · 총 ${book.totalPages}p</p>
+                    <h3 class="font-title text-lg sm:text-xl text-cozyBrown leading-snug truncate">${escapeHtml(book.title)}</h3>
+                    <p class="text-xs text-gray-500 truncate">${escapeHtml(book.author)} · 총 ${book.totalPages}p</p>
                   </div>
                 </div>
 
-                <button onclick="openBookModal('${book.id}', ${roundIndex})"
-                  class="px-3 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs font-bold text-cozyBrown border border-amber-200 shrink-0 transition">
-                  ✏️ 상세 수정
-                </button>
+                <div class="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 shrink-0">
+                  <button onclick="openBookModal('${book.id}', ${roundIndex}, true)"
+                    class="px-2.5 py-1.5 rounded-xl bg-softYellow hover:bg-amber-200 text-xs font-bold text-amber-950 border border-amber-300 transition">
+                    🔖 발췌·독후감·사진
+                  </button>
+                  <button onclick="openBookModal('${book.id}', ${roundIndex}, false)"
+                    class="px-2.5 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs font-bold text-cozyBrown border border-amber-200 transition">
+                    ✏️ 수정
+                  </button>
+                </div>
               </div>
 
               <div class="bg-cream p-4 rounded-2xl border border-amber-200/70 mb-3">
@@ -1167,17 +1331,26 @@
                     <input type="number" min="0" max="${book.totalPages}" value="${reading.currentPage}"
                       id="numInput-${book.id}-${roundIndex}"
                       onchange="updateReadingProgress('${book.id}', ${roundIndex}, this.value)"
-                      class="w-18 px-2.5 py-1.5 rounded-xl bg-white border border-amber-300 text-sm font-bold text-center text-cozyBrown focus:outline-none" style="width: 72px;" />
+                      class="px-2.5 py-1.5 rounded-xl bg-white border border-amber-300 text-sm font-bold text-center text-cozyBrown focus:outline-none" style="width: 72px;" />
                     <span class="text-xs font-bold text-gray-500">p</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="flex items-center justify-between gap-2 pt-2 border-t border-amber-100">
-              <p class="text-xs text-gray-600 truncate flex-1">
-                💬 ${reading.memo ? escapeHtml(reading.memo) : '아직 작성된 독후감 메모가 없어요.'}
-              </p>
+            <!-- 하단: 발췌/독후감/사진 배지 & 완독 버튼 -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-amber-100">
+              <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2 py-0.5 rounded-lg bg-warmBeige hover:bg-amber-200/60 text-cozyBrown font-bold">
+                  🔖 발췌 ${quotesCnt}
+                </button>
+                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2 py-0.5 rounded-lg ${hasReview ? 'bg-softMint text-teal-900' : 'bg-warmBeige text-gray-500'} font-bold">
+                  📝 독후감 ${hasReview ? '작성됨' : '쓰기'}
+                </button>
+                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2 py-0.5 rounded-lg bg-warmBeige hover:bg-amber-200/60 text-cozyBrown font-bold">
+                  📸 사진 ${photosCnt}
+                </button>
+              </div>
               <button onclick="markAsCompleted('${book.id}', ${roundIndex})"
                 class="px-4 py-2 rounded-xl bg-softMint hover:bg-teal-200 text-teal-950 font-title text-xs sm:text-sm border border-teal-300 shrink-0 shadow-2xs transition active:scale-95">
                 🎉 완독했어요!
@@ -1246,7 +1419,6 @@
       renderCalendar();
     }
 
-    // [핵심 수정 1] 4권 이상일 때도 아래 주(Week) 날짜와 절대 겹치거나 삐져나가지 않도록 동적 셀 높이 & min-w-0 적용!
     function renderCalendar() {
       document.getElementById('calendarMonthTitle').textContent = `${calendarYear}년 ${calendarMonth + 1}월`;
       const container = document.getElementById('calendarWeeksContainer');
@@ -1313,7 +1485,7 @@
         const weekEvents = allEvents.filter(ev => ev.startDate <= weekEndStr && ev.endDate >= weekStartStr);
         weekEvents.sort((a, b) => a.startDate.localeCompare(b.startDate));
 
-        const tracks = [[], [], [], []]; // 기본 최소 4단 보장 (5권, 6권이면 자동으로 5단, 6단으로 확장)
+        const tracks = [[], [], [], []];
         const placedSegments = [];
 
         weekEvents.forEach(ev => {
@@ -1353,7 +1525,6 @@
         });
 
         const totalTrackRows = Math.max(4, tracks.length);
-        // 책이 4권이든 6권이든 절대 아래 날짜와 겹치지 않도록 주간 셀 높이를 트랙 수에 비례해 자동 확장!
         const dynamicMinHeightPx = 38 + (totalTrackRows * 27) + 10;
 
         const dayHeaderCells = week.map((d, idx) => {
@@ -1391,7 +1562,6 @@
             const statusPrefix = seg.isCompleted ? '✅' : seg.emoji;
             const statusBadge = seg.isCompleted ? `${seg.round}회독 완독` : `${seg.round}회독 중`;
 
-            // 1칸짜리 좁은 셀에서도 절대 옆으로 삐져나가지 않도록 min-w-0 overflow-hidden 완벽 적용
             rowCellsHtml += `
               <div style="grid-column: span ${seg.span} / span ${seg.span};" class="h-[23px] flex items-center min-w-0 overflow-hidden ${padWrapClass}">
                 <button onclick="openBookModal('${seg.bookId}', ${seg.roundIndex})"
@@ -1433,6 +1603,9 @@
       return `${y}-${m}-${day}`;
     }
 
+    // ==========================================================
+    // <내 책장> 렌더링
+    // ==========================================================
     function setBookshelfSort(sortKey) {
       bookshelfSort = sortKey;
       document.querySelectorAll('.sort-btn').forEach(btn => {
@@ -1481,6 +1654,16 @@
         return (book.readings || []).filter(r => r.status === 'completed' && r.endDate).length;
       };
 
+      const getBookNoteCounts = (book) => {
+        let q = 0, p = 0, rv = 0;
+        (book.readings || []).forEach(r => {
+          q += (r.quotes || []).length;
+          p += (r.photos || []).length;
+          if (r.review && r.review.trim()) rv++;
+        });
+        return { q, p, rv };
+      };
+
       filtered.sort((a, b) => {
         if (bookshelfSort === 'purchaseDate') {
           return (b.purchaseDate || '').localeCompare(a.purchaseDate || '');
@@ -1520,21 +1703,26 @@
           const firstComp = getFirstCompletedDate(book);
           const latestIdx = Math.max(0, (book.readings || []).length - 1);
           const latestReading = book.readings[latestIdx];
+          const counts = getBookNoteCounts(book);
+          const firstPhoto = (latestReading?.photos || [])[0];
 
           return `
             <div onclick="openBookModal('${book.id}', ${latestIdx})"
               class="bg-white rounded-3xl p-5 border border-amber-200/80 shadow-sm hover:shadow-md hover:border-accentCoral/60 transition cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-start justify-between gap-3 mb-3">
-                  <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
-                    style="background-color: ${icon.bg}; border-color: ${icon.border};">
-                    ${icon.emoji}
+                  <div class="flex items-center gap-2">
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
+                      style="background-color: ${icon.bg}; border-color: ${icon.border};">
+                      ${icon.emoji}
+                    </div>
+                    ${firstPhoto ? `<img src="${firstPhoto.dataUrl}" class="w-12 h-12 rounded-2xl object-cover border border-amber-200" alt="첨부사진" />` : ''}
                   </div>
                   <div class="flex flex-wrap gap-1 justify-end">
                     <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softYellow text-amber-950 border border-amber-300">
                       ✨ 완독 ${compCount}회
                     </span>
-                    ${latestReading?.status === 'reading' ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softCoral text-red-900">${latestReading.round}회독 진행 중</span>` : ''}
+                    ${latestReading?.status === 'reading' ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softCoral text-red-900">${latestReading.round}회독 중</span>` : ''}
                   </div>
                 </div>
 
@@ -1547,9 +1735,16 @@
                 </div>
               </div>
 
-              <div class="mt-3 pt-2.5 border-t border-amber-100 flex items-center justify-between text-xs">
-                <span class="text-gray-500 truncate max-w-[70%]">💬 ${latestReading?.memo ? escapeHtml(latestReading.memo) : '메모 없음'}</span>
-                <span class="font-bold text-amber-800 shrink-0">상세 / N회독 ➔</span>
+              <div class="mt-3 pt-2.5 border-t border-amber-100">
+                <p class="text-xs text-gray-600 truncate mb-2">💬 ${latestReading?.memo ? escapeHtml(latestReading.memo) : (latestReading?.review ? escapeHtml(latestReading.review) : '메모 없음')}</p>
+                <div class="flex items-center justify-between text-[11px] font-bold text-amber-900">
+                  <div class="flex items-center gap-2">
+                    <span>🔖 발췌 ${counts.q}</span>
+                    <span>📝 독후감 ${counts.rv}</span>
+                    <span>📸 사진 ${counts.p}</span>
+                  </div>
+                  <span>상세 / 기록 ➔</span>
+                </div>
               </div>
             </div>
           `;
@@ -1562,6 +1757,7 @@
           const firstComp = getFirstCompletedDate(book);
           const latestIdx = Math.max(0, (book.readings || []).length - 1);
           const latestReading = book.readings[latestIdx];
+          const counts = getBookNoteCounts(book);
 
           return `
             <div onclick="openBookModal('${book.id}', ${latestIdx})"
@@ -1576,12 +1772,13 @@
                     <h4 class="font-title text-base text-cozyBrown truncate">${escapeHtml(book.title)}</h4>
                     <span class="text-xs text-gray-500 shrink-0">| ${escapeHtml(book.author)}</span>
                   </div>
-                  <p class="text-xs text-gray-500 truncate">💬 ${latestReading?.memo ? escapeHtml(latestReading.memo) : '독후감 메모 없음'}</p>
+                  <p class="text-xs text-gray-500 truncate">💬 ${latestReading?.memo ? escapeHtml(latestReading.memo) : '한줄 메모 없음'}</p>
                 </div>
               </div>
 
-              <div class="flex flex-wrap items-center gap-3 text-xs shrink-0">
-                <span class="text-gray-500">구매: <strong>${book.purchaseDate || '-'}</strong></span>
+              <div class="flex flex-wrap items-center gap-2.5 text-xs shrink-0">
+                <span class="px-2 py-0.5 rounded-lg bg-warmBeige text-cozyBrown font-bold">🔖${counts.q} 📝${counts.rv} 📸${counts.p}</span>
+                <span class="text-gray-500 hidden sm:inline">구매: <strong>${book.purchaseDate || '-'}</strong></span>
                 <span class="text-gray-500">첫완독: <strong>${firstComp || '-'}</strong></span>
                 <span class="px-2.5 py-1 rounded-full font-bold bg-softYellow text-amber-950 border border-amber-300">완독 ${compCount}회</span>
               </div>
@@ -1613,6 +1810,132 @@
       }
     }
 
+    // ==========================================================
+    // [탭 3 - 신규] ✨ 발췌·독후감·사진 모아보기 렌더링
+    // ==========================================================
+    function setNotesFilter(filterKey) {
+      notesFilter = filterKey;
+      document.querySelectorAll('.notes-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-cozyBrown', 'shadow-sm');
+        btn.classList.add('text-gray-600');
+      });
+      const activeBtn = document.getElementById(`notesFilterBtn-${filterKey}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'text-cozyBrown', 'shadow-sm');
+        activeBtn.classList.remove('text-gray-600');
+      }
+      renderNotesArchive();
+    }
+
+    function renderNotesArchive() {
+      const container = document.getElementById('notesArchiveContainer');
+      const cards = [];
+
+      books.forEach(book => {
+        const icon = getIconObj(book.iconId);
+        (book.readings || []).forEach((r, rIdx) => {
+          const quotes = r.quotes || [];
+          const photos = r.photos || [];
+          const hasReview = Boolean(r.review && r.review.trim());
+          const hasMemo = Boolean(r.memo && r.memo.trim());
+
+          if (notesFilter === 'quotes' && quotes.length === 0) return;
+          if (notesFilter === 'reviews' && !hasReview && !hasMemo) return;
+          if (notesFilter === 'photos' && photos.length === 0) return;
+          if (notesFilter === 'all' && quotes.length === 0 && !hasReview && !hasMemo && photos.length === 0) return;
+
+          cards.push({ book, icon, reading: r, roundIndex: rIdx, quotes, photos, hasReview, hasMemo });
+        });
+      });
+
+      if (cards.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-3xl p-10 text-center border border-dashed border-amber-300">
+            <div class="text-4xl mb-2">✨</div>
+            <p class="font-title text-lg text-cozyBrown">아직 등록된 발췌 문장이나 독후감, 사진이 없습니다</p>
+            <p class="text-xs text-gray-500 mt-1">책을 누르고 상세 창에서 인상 깊은 구절이나 독후감, 사진을 추가해 보세요!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cards.map(({ book, icon, reading, roundIndex, quotes, photos, hasReview, hasMemo }) => {
+        const showQuotes = (notesFilter === 'all' || notesFilter === 'quotes') && quotes.length > 0;
+        const showReview = (notesFilter === 'all' || notesFilter === 'reviews') && (hasReview || hasMemo);
+        const showPhotos = (notesFilter === 'all' || notesFilter === 'photos') && photos.length > 0;
+
+        return `
+          <div class="bg-white rounded-3xl p-5 sm:p-6 border border-amber-200/80 shadow-sm space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-100 pb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
+                  style="background-color: ${icon.bg}; border-color: ${icon.border};">
+                  ${icon.emoji}
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-title text-lg text-cozyBrown">${escapeHtml(book.title)}</h3>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200">${reading.round}회독</span>
+                  </div>
+                  <p class="text-xs text-gray-500">${escapeHtml(book.author)} · ${reading.endDate ? `완독일: ${reading.endDate}` : `읽는 중 (${reading.currentPage}p)`}</p>
+                </div>
+              </div>
+              <button onclick="openBookModal('${book.id}', ${roundIndex}, true)"
+                class="px-3.5 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs font-bold text-cozyBrown border border-amber-200 transition">
+                ✏️ 발췌·독후감·사진 편집
+              </button>
+            </div>
+
+            ${showReview ? `
+              <div class="space-y-2">
+                ${hasMemo ? `<div class="px-3.5 py-2 rounded-xl bg-warmBeige/60 text-xs sm:text-sm font-bold text-cozyBrown">💬 한줄평: ${escapeHtml(reading.memo)}</div>` : ''}
+                ${hasReview ? `
+                  <div class="p-4 rounded-2xl bg-softMint/20 border border-teal-200/70">
+                    <div class="text-xs font-bold text-teal-900 mb-1">📝 심층 독후감</div>
+                    <p class="text-sm text-gray-800 whitespace-pre-line leading-relaxed">${escapeHtml(reading.review)}</p>
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
+
+            ${showQuotes ? `
+              <div class="space-y-2">
+                <div class="text-xs font-bold text-amber-900">🔖 수집한 문장 발췌 (${quotes.length}개)</div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                  ${quotes.map(q => `
+                    <div class="p-3.5 rounded-2xl bg-softYellow/35 border border-amber-200/80 flex items-start gap-2.5">
+                      <span class="px-2 py-0.5 rounded-lg bg-white text-amber-900 font-bold text-xs border border-amber-200 shrink-0">
+                        ${q.page ? `p.${q.page}` : '구절'}
+                      </span>
+                      <p class="text-xs sm:text-sm text-cozyBrown font-medium leading-relaxed">“${escapeHtml(q.text)}”</p>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            ${showPhotos ? `
+              <div>
+                <div class="text-xs font-bold text-pink-900 mb-2">📸 첨부 사진 (${photos.length}장 · 터치하면 확대됩니다)</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3">
+                  ${photos.map(ph => `
+                    <div onclick="openPhotoLightbox('${ph.dataUrl}', '${escapeHtml(book.title)} (${reading.round}회독)')"
+                      class="group cursor-pointer rounded-2xl overflow-hidden border border-amber-200 bg-warmBeige/40 shadow-2xs">
+                      <img src="${ph.dataUrl}" alt="독서 사진" class="w-full h-28 object-cover group-hover:scale-105 transition" />
+                      <div class="px-2 py-1 text-[11px] text-gray-600 truncate text-center">${escapeHtml(ph.caption || '독서 기록 사진')}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==========================================================
+    // <독서통계> 렌더링
+    // ==========================================================
     function populateStatsYearSelect() {
       const select = document.getElementById('statsYearSelect');
       const currentYear = new Date().getFullYear();
@@ -1655,7 +1978,6 @@
       renderStats();
     }
 
-    // [핵심 추가 3] 독서통계 하단 완독 리스트의 보기 모드 전환 함수 (기본 타일 / 간단 모드 / 미니 타일)
     function setStatsListView(viewMode) {
       statsListView = viewMode;
       document.querySelectorAll('.stats-view-btn').forEach(btn => {
@@ -1737,7 +2059,6 @@
       const listContainer = document.getElementById('statsCompletedListContainer');
       const periodLabel = selectedMonth === 'all' ? `${selectedYear}년 전체` : `${selectedYear}년 ${selectedMonth}월`;
 
-      // 통계 완독 리스트에 표시할 공통 아이템 배열 구성
       let displayItems = [];
 
       if (statsCountingMode === 'unique') {
@@ -1753,7 +2074,7 @@
               book,
               roundIndex: (book.readings || []).indexOf(latestR),
               endDate: latestR.endDate,
-              memo: latestR.memo,
+              memo: latestR.memo || latestR.review || '',
               badgeText: `📗 1권 인정 (누적 ${totalBookCompletedCount}회독)`,
               shortBadge: `${totalBookCompletedCount}회독`
             });
@@ -1775,7 +2096,7 @@
                 book,
                 roundIndex: idx,
                 endDate: r.endDate,
-                memo: r.memo,
+                memo: r.memo || r.review || '',
                 badgeText: `🔁 ${r.round}회독 완독`,
                 shortBadge: `${r.round}회독`
               });
@@ -1797,7 +2118,6 @@
         return;
       }
 
-      // 선택된 statsListView ('tile' | 'list' | 'mini')에 맞춰 렌더링!
       if (statsListView === 'tile') {
         listContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
         listContainer.innerHTML = displayItems.map(item => {
@@ -1872,6 +2192,9 @@
       }
     }
 
+    // ==========================================================
+    // 모달: 24종 아이콘 + 발췌 + 심층독후감 + 초경량 사진 압축 로직
+    // ==========================================================
     function renderIconPalette() {
       const container = document.getElementById('iconPaletteContainer');
       container.innerHTML = BOOK_ICONS.map(icon => {
@@ -1893,10 +2216,165 @@
       renderIconPalette();
     }
 
-    function openBookModal(bookId = null, roundIdx = 0) {
+    // 모달 안의 발췌 문장 리스트 렌더링
+    function renderModalQuotesList() {
+      document.getElementById('modalQuotesCountBadge').textContent = `${modalTempQuotes.length}개`;
+      const container = document.getElementById('modalQuotesListContainer');
+      if (modalTempQuotes.length === 0) {
+        container.innerHTML = `<p class="text-xs text-gray-400 py-1">아직 추가된 발췌 문장이 없습니다. 위 입력창에 페이지와 문장을 적어 추가해 보세요.</p>`;
+        return;
+      }
+      container.innerHTML = modalTempQuotes.map((q, idx) => `
+        <div class="flex items-start justify-between gap-2 p-2.5 rounded-xl bg-white border border-amber-200 text-xs">
+          <div class="flex items-start gap-2 min-w-0">
+            <span class="px-2 py-0.5 rounded-md bg-softYellow text-amber-950 font-bold shrink-0">${q.page ? `p.${q.page}` : '구절'}</span>
+            <p class="text-cozyBrown leading-relaxed break-words">“${escapeHtml(q.text)}”</p>
+          </div>
+          <button type="button" onclick="removeQuoteInModal(${idx})" class="text-red-500 hover:text-red-700 font-bold px-1.5 shrink-0">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function addQuoteInModal() {
+      const pageEl = document.getElementById('newQuotePageInput');
+      const textEl = document.getElementById('newQuoteTextInput');
+      const page = parseInt(pageEl.value, 10) || '';
+      const text = textEl.value.trim();
+
+      if (!text) {
+        alert('발췌할 문장 내용을 입력해 주세요!');
+        return;
+      }
+
+      modalTempQuotes.push({
+        id: 'qt_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+        page,
+        text,
+        createdAt: getTodayStr()
+      });
+
+      pageEl.value = '';
+      textEl.value = '';
+      renderModalQuotesList();
+    }
+
+    function removeQuoteInModal(idx) {
+      modalTempQuotes.splice(idx, 1);
+      renderModalQuotesList();
+    }
+
+    // [핵심] HTML5 Canvas 기반 초경량 사진 자동 압축 함수 (720px, JPEG 0.68 -> 약 35~55KB)
+    function compressImageFileToDataUrl(file, maxWidth = 720, quality = 0.68) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            if (width > maxWidth || height > maxWidth) {
+              if (width > height) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+              } else {
+                width = Math.round((width * maxWidth) / height);
+                height = maxWidth;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(compressedDataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handlePhotoUploadInModal(event) {
+      const files = Array.from(event.target.files || []);
+      if (files.length === 0) return;
+
+      for (const file of files) {
+        try {
+          const compressedDataUrl = await compressImageFileToDataUrl(file, 720, 0.68);
+          const approxKb = Math.round((compressedDataUrl.length * 3) / 4 / 1024);
+          modalTempPhotos.push({
+            id: 'ph_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+            dataUrl: compressedDataUrl,
+            caption: `${getTodayStr()} (${approxKb}KB 압축됨)`,
+            createdAt: getTodayStr()
+          });
+        } catch (err) {
+          console.error('이미지 압축 실패:', err);
+        }
+      }
+
+      event.target.value = '';
+      renderModalPhotosGrid();
+    }
+
+    function renderModalPhotosGrid() {
+      const container = document.getElementById('modalPhotosGridContainer');
+      if (modalTempPhotos.length === 0) {
+        container.innerHTML = `<p class="col-span-full text-xs text-gray-400 py-1">첨부된 사진이 없습니다. 우측 상단 '📷 사진 촬영 / 선택'을 눌러 책 표지나 밑줄 친 페이지를 추가해 보세요.</p>`;
+        return;
+      }
+
+      container.innerHTML = modalTempPhotos.map((ph, idx) => `
+        <div class="relative rounded-2xl overflow-hidden border border-pink-200 bg-white shadow-2xs group">
+          <img src="${ph.dataUrl}" onclick="openPhotoLightbox('${ph.dataUrl}', '첨부 사진 미리보기')"
+            class="w-full h-24 object-cover cursor-pointer" alt="첨부사진" />
+          <button type="button" onclick="removePhotoInModal(${idx})"
+            class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/60 text-white text-xs font-bold flex items-center justify-center">
+            ✕
+          </button>
+          <input type="text" value="${escapeHtml(ph.caption || '')}"
+            onchange="updatePhotoCaptionInModal(${idx}, this.value)"
+            placeholder="사진 설명 입력..."
+            class="w-full px-2 py-1 text-[11px] text-cozyBrown border-t border-pink-100 focus:outline-none" />
+        </div>
+      `).join('');
+    }
+
+    function updatePhotoCaptionInModal(idx, val) {
+      if (modalTempPhotos[idx]) {
+        modalTempPhotos[idx].caption = val.trim();
+      }
+    }
+
+    function removePhotoInModal(idx) {
+      modalTempPhotos.splice(idx, 1);
+      renderModalPhotosGrid();
+    }
+
+    function openPhotoLightbox(dataUrl, captionText = '') {
+      document.getElementById('lightboxImage').src = dataUrl;
+      document.getElementById('lightboxCaption').textContent = captionText || '사진 크게 보기';
+      const modal = document.getElementById('photoLightboxModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePhotoLightbox() {
+      const modal = document.getElementById('photoLightboxModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openBookModal(bookId = null, roundIdx = 0, scrollToNotes = false) {
       const modal = document.getElementById('bookModal');
       const deleteBtn = document.getElementById('modalDeleteBookBtn');
       const roundsSection = document.getElementById('modalRoundsSection');
+
+      document.getElementById('newQuotePageInput').value = '';
+      document.getElementById('newQuoteTextInput').value = '';
 
       if (!bookId) {
         document.getElementById('bookModalTitle').textContent = '➕ 새 책 등록하기';
@@ -1914,6 +2392,12 @@
         document.getElementById('modalEndDate').value = '';
         document.getElementById('modalCurrentPage').value = '0';
         document.getElementById('modalMemo').value = '';
+        document.getElementById('modalReview').value = '';
+
+        modalTempQuotes = [];
+        modalTempPhotos = [];
+        renderModalQuotesList();
+        renderModalPhotosGrid();
 
         roundsSection.classList.add('hidden');
         deleteBtn.classList.add('hidden');
@@ -1923,7 +2407,7 @@
         const rIdx = (roundIdx >= 0 && roundIdx < book.readings.length) ? roundIdx : book.readings.length - 1;
         const reading = book.readings[rIdx];
 
-        document.getElementById('bookModalTitle').textContent = `✏️ 도서 및 ${reading.round}회독 상세 수정`;
+        document.getElementById('bookModalTitle').textContent = `✏️ 『${book.title}』 ${reading.round}회독 상세 & 독서노트`;
         document.getElementById('modalBookId').value = book.id;
         document.getElementById('modalRoundIndex').value = String(rIdx);
         selectedModalIconId = book.iconId || 'coral-book';
@@ -1939,6 +2423,12 @@
         document.getElementById('modalEndDate').value = reading.endDate || '';
         document.getElementById('modalCurrentPage').value = reading.currentPage || 0;
         document.getElementById('modalMemo').value = reading.memo || '';
+        document.getElementById('modalReview').value = reading.review || '';
+
+        modalTempQuotes = JSON.parse(JSON.stringify(reading.quotes || []));
+        modalTempPhotos = JSON.parse(JSON.stringify(reading.photos || []));
+        renderModalQuotesList();
+        renderModalPhotosGrid();
 
         roundsSection.classList.remove('hidden');
         const roundTabs = document.getElementById('modalRoundTabs');
@@ -1958,6 +2448,12 @@
 
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+
+      if (scrollToNotes) {
+        setTimeout(() => {
+          document.getElementById('modalDeepNotesSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+      }
     }
 
     function clearModalEndDate() {
@@ -1982,7 +2478,10 @@
         targetDate: getOffsetDateStr(14),
         endDate: '',
         currentPage: 0,
-        memo: ''
+        memo: '',
+        review: '',
+        quotes: [],
+        photos: []
       });
 
       saveData(true);
@@ -1990,6 +2489,12 @@
     }
 
     function saveBookModal() {
+      // 혹시 사용자가 문장 입력칸에 글을 적어두고 '+ 문장 추가' 버튼을 안 누른 채 바로 저장하기를 눌렀다면 자동 포함!
+      const pendingQuoteText = document.getElementById('newQuoteTextInput').value.trim();
+      if (pendingQuoteText) {
+        addQuoteInModal();
+      }
+
       const bookId = document.getElementById('modalBookId').value;
       const roundIdx = parseInt(document.getElementById('modalRoundIndex').value, 10) || 0;
 
@@ -2002,6 +2507,7 @@
       const endDate = document.getElementById('modalEndDate').value.trim();
       let currentPage = parseInt(document.getElementById('modalCurrentPage').value, 10) || 0;
       const memo = document.getElementById('modalMemo').value.trim();
+      const review = document.getElementById('modalReview').value.trim();
 
       if (!title) {
         alert('책 제목을 입력해 주세요!');
@@ -2032,7 +2538,10 @@
               targetDate,
               endDate: isCompleted ? endDate : '',
               currentPage,
-              memo
+              memo,
+              review,
+              quotes: modalTempQuotes,
+              photos: modalTempPhotos
             }
           ]
         };
@@ -2053,6 +2562,9 @@
           book.readings[roundIdx].endDate = isCompleted ? endDate : '';
           book.readings[roundIdx].currentPage = currentPage;
           book.readings[roundIdx].memo = memo;
+          book.readings[roundIdx].review = review;
+          book.readings[roundIdx].quotes = modalTempQuotes;
+          book.readings[roundIdx].photos = modalTempPhotos;
         }
       }
 
@@ -2098,6 +2610,9 @@
       closeGoalModal();
     }
 
+    // ==========================================================
+    // GitHub 클라우드 자동 동기화 & 백업 파일 호환 로직
+    // ==========================================================
     function toggleTokenVisibility() {
       const input = document.getElementById('ghTokenInput');
       const btn = document.getElementById('toggleTokenBtn');
@@ -2224,7 +2739,7 @@
         }
 
         if (res.status === 401) {
-          throw new Error('401_UNAUTHORIZED: 입력하신 토큰(PAT 암호키)이 유효하지 않거나 오타가 있습니다. 토큰을 다시 복사해 넣어주세요.');
+          throw new Error('401_UNAUTHORIZED: 입력하신 토큰(PAT 암호키)이 유효하지 않거나 오타가 있습니다.');
         }
         if (res.status === 403) {
           throw new Error('403_FORBIDDEN: 토큰에 [repo] 권한 체크가 빠져 있거나 API 호출 제한입니다.');
@@ -2239,7 +2754,8 @@
         const parsed = JSON.parse(decodedJson);
 
         if (parsed && Array.isArray(parsed.books)) {
-          books = parsed.books;
+          // 기존 GitHub 백업 데이터도 normalizeBooksData를 통해 100% 무결점 호환!
+          books = normalizeBooksData(parsed.books);
           if (parsed.yearlyGoal) yearlyGoal = parsed.yearlyGoal;
           saveData(false);
           const nowTime = new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
@@ -2261,7 +2777,7 @@
       updateSyncBadge('🟡', '자동 저장 대기 중...');
       if (autoSaveTimer) clearTimeout(autoSaveTimer);
       autoSaveTimer = setTimeout(() => {
-        uploadDataToGithubInternal('Auto-sync reading progress');
+        uploadDataToGithubInternal('Auto-sync reading progress & notes');
       }, 1500);
     }
 
@@ -2286,7 +2802,7 @@
           const existing = await getRes.json();
           sha = existing.sha;
         } else if (getRes.status === 401) {
-          throw new Error('401 오류: 토큰(PAT 암호키)이 잘못되었습니다. 토큰을 다시 확인해 주세요.');
+          throw new Error('401 오류: 토큰(PAT 암호키)이 잘못되었습니다.');
         }
 
         const payloadObj = {
@@ -2311,7 +2827,7 @@
         });
 
         if (putRes.status === 404 || putRes.status === 403) {
-          throw new Error('쓰기 권한 거부(403/404): GitHub에서 토큰을 만드실 때 첫 번째 네모 칸인 [✓ repo] 체크박스가 빠졌습니다! 토큰 설정에서 repo를 체크해 주세요.');
+          throw new Error('쓰기 권한 거부(403/404): 토큰 설정에서 [✓ repo] 체크박스를 확인해 주세요.');
         }
         if (!putRes.ok) {
           const errData = await putRes.json().catch(() => ({}));
@@ -2405,10 +2921,11 @@
           const importedBooks = Array.isArray(parsed) ? parsed : parsed.books;
           if (!Array.isArray(importedBooks)) throw new Error('유효하지 않은 백업 형식');
 
-          books = importedBooks;
+          // 기존 구버전 백업 파일도 normalizeBooksData를 거쳐 100% 호환 복원!
+          books = normalizeBooksData(importedBooks);
           if (parsed.yearlyGoal) yearlyGoal = parseInt(parsed.yearlyGoal, 10) || 30;
           saveData(true);
-          alert(`📂 총 ${books.length}권의 독서 기록을 성공적으로 복원했습니다!`);
+          alert(`📂 총 ${books.length}권의 독서 기록을 기존 백업에서 완벽하게 복원했습니다!`);
         } catch (err) {
           alert('백업 파일을 읽는 중 오류가 발생했습니다. 올바른 JSON 백업 파일인지 확인해 주세요.');
         }
@@ -2427,7 +2944,7 @@
 
     function switchTab(tabName) {
       currentTab = tabName;
-      ['reading', 'bookshelf', 'stats', 'settings'].forEach(t => {
+      ['reading', 'bookshelf', 'notes', 'stats', 'settings'].forEach(t => {
         const content = document.getElementById(`tabContent-${t}`);
         const btn = document.getElementById(`tabBtn-${t}`);
         if (t === tabName) {
@@ -2458,6 +2975,7 @@
       renderCalendar();
       renderReadingCards();
       renderBookshelf();
+      renderNotesArchive();
       populateStatsYearSelect();
       renderStats();
     }
