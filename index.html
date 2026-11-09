@@ -297,9 +297,9 @@
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
             <span class="text-2xl">✍️</span>
-            <h2 class="font-title text-xl text-cozyBrown">지금 읽고 있는 책 진도 카드</h2>
+            <h2 class="font-title text-xl sm:text-2xl text-cozyBrown">지금 읽고 있는 책 진도 카드</h2>
           </div>
-          <span class="text-xs text-gray-500">슬라이더를 움직이거나 '발췌·독후감·사진' 버튼을 눌러 기록을 남겨보세요</span>
+          <span class="text-xs sm:text-sm text-gray-500">슬라이더를 움직이거나 '발췌·독후감·사진' 버튼을 눌러 기록을 남겨보세요</span>
         </div>
 
         <div id="readingCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
@@ -359,7 +359,7 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- [탭 3 - 신규] ✨ 발췌·독후감·사진 모아보기 (독서노트 라운지) -->
+    <!-- [탭 3] ✨ 발췌·독후감·사진 모아보기 (독서노트 라운지) -->
     <!-- ========================================================== -->
     <section id="tabContent-notes" class="hidden space-y-5">
       <div class="bg-white rounded-2xl p-4 sm:p-5 border border-amber-200/80 shadow-sm flex flex-wrap items-center justify-between gap-3">
@@ -617,7 +617,7 @@
       <input type="hidden" id="modalBookId" />
       <input type="hidden" id="modalRoundIndex" />
 
-      <!-- 1. 위아래님께서 좋아하시는 24종 컬러·모양 책 아이콘 선택 팔레트 (100% 그대로 유지!) -->
+      <!-- 1. 24종 컬러·모양 책 아이콘 선택 팔레트 -->
       <div class="mb-4">
         <label class="block text-xs font-bold text-cozyBrown mb-2">🎨 책 아이콘 및 컬러 스타일 선택 (24종)</label>
         <div id="iconPaletteContainer" class="grid grid-cols-6 sm:grid-cols-8 gap-2 p-3 rounded-2xl bg-warmBeige/70 border border-amber-200/80 max-h-44 overflow-y-auto"></div>
@@ -654,7 +654,7 @@
         <div id="modalRoundTabs" class="flex flex-wrap gap-2"></div>
       </div>
 
-      <!-- 4. 날짜 입력 (아이패드 겹침 방지 min-w-0 overflow-hidden 적용 완료) -->
+      <!-- 4. 날짜 입력 -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 bg-warmBeige/50 p-4 rounded-2xl border border-amber-200/70">
         <div class="min-w-0 overflow-hidden">
           <div class="flex items-center justify-between min-h-[26px] mb-1">
@@ -693,7 +693,7 @@
         </div>
       </div>
 
-      <!-- 5. 현재 페이지 & 한줄 요약 메모 (기존 메모 호환) -->
+      <!-- 5. 현재 페이지 & 한줄 요약 메모 -->
       <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 mb-4">
         <div class="sm:col-span-4 min-w-0">
           <label class="block text-xs font-bold text-cozyBrown mb-1">🔖 현재 읽은 페이지</label>
@@ -708,12 +708,9 @@
         </div>
       </div>
 
-      <!-- ========================================================== -->
-      <!-- [신규 기능 통합 구역] 1. 문장 발췌 / 2. 심층 독후감 / 3. 초경량 사진 첨부 -->
-      <!-- ========================================================== -->
+      <!-- 6. 발췌 / 심층 독후감 / 초경량 사진 첨부 구역 -->
       <div id="modalDeepNotesSection" class="space-y-4 mt-5 pt-4 border-t-2 border-dashed border-amber-200">
 
-        <!-- (A) 🔖 1. 문장 발췌 (인상 깊은 구절 수집) -->
         <div class="bg-softYellow/35 p-4 rounded-2xl border border-amber-200/90">
           <div class="flex items-center justify-between mb-2">
             <label class="font-title text-base text-cozyBrown flex items-center gap-1.5">
@@ -722,7 +719,6 @@
             <span id="modalQuotesCountBadge" class="text-xs font-bold text-amber-900 bg-white px-2.5 py-0.5 rounded-full border border-amber-200">0개</span>
           </div>
 
-          <!-- 새 발췌 문장 추가 입력창 -->
           <div class="flex flex-col sm:flex-row gap-2 mb-3">
             <div class="flex items-center gap-1 sm:w-28 shrink-0">
               <span class="text-xs font-bold text-amber-900">p.</span>
@@ -738,11 +734,9 @@
             </button>
           </div>
 
-          <!-- 등록된 발췌 문장 리스트 -->
           <div id="modalQuotesListContainer" class="space-y-2 max-h-44 overflow-y-auto"></div>
         </div>
 
-        <!-- (B) 📝 2. 심층 독후감 (긴 글 서평 에디터) -->
         <div class="bg-softMint/25 p-4 rounded-2xl border border-teal-200/90">
           <div class="flex items-center justify-between mb-1.5">
             <label class="font-title text-base text-cozyBrown flex items-center gap-1.5">
@@ -754,7 +748,6 @@
             class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-teal-300/80 text-sm leading-relaxed focus:outline-none focus:border-teal-500"></textarea>
         </div>
 
-        <!-- (C) 📸 3. 초경량 사진 첨부 (자동 40~60KB 압축 엔진) -->
         <div class="bg-softCoral/25 p-4 rounded-2xl border border-pink-200/90">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
             <div>
@@ -815,7 +808,7 @@
   </div>
 
   <!-- ========================================================== -->
-  <!-- [모달 3 - 신규] 사진 크게 보기 라이트박스 (Photo Lightbox) -->
+  <!-- [모달 3] 사진 크게 보기 라이트박스 -->
   <!-- ========================================================== -->
   <div id="photoLightboxModal" onclick="closePhotoLightbox()" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
     <div class="max-w-3xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
@@ -828,10 +821,9 @@
   </div>
 
   <!-- ========================================================== -->
-  <!-- 자바스크립트 비즈니스 로직 (생략 없는 전체 구현) -->
+  <!-- 자바스크립트 비즈니스 로직 -->
   <!-- ========================================================== -->
   <script>
-    // 1. 위아래님께서 선호하시는 24종 컬러·모양 책 아이콘 팔레트 (100% 보존)
     const BOOK_ICONS = [
       { id: 'coral-book', emoji: '📕', bg: '#FFD6D6', border: '#FCA5A5', label: '코랄 레드북' },
       { id: 'mint-book', emoji: '📗', bg: '#D4F4E8', border: '#6EE7B7', label: '민트 그린북' },
@@ -881,11 +873,10 @@
     let bookshelfView = 'tile';
     let statsCountingMode = 'unique';
     let statsListView = 'tile';
-    let notesFilter = 'all'; // 'all' | 'quotes' | 'reviews' | 'photos'
+    let notesFilter = 'all';
     let selectedModalIconId = 'coral-book';
     let autoSaveTimer = null;
 
-    // 모달 내부에서 편집 중인 임시 발췌(quotes) 및 사진(photos) 배열
     let modalTempQuotes = [];
     let modalTempPhotos = [];
 
@@ -906,11 +897,9 @@
       return `${y}-${m}-${day}`;
     }
 
-    // [핵심] 기존 백업 파일(reading-data.json 및 수동 백업) 100% 하위 호환 보정 함수
     function normalizeBooksData(rawBooks) {
       if (!Array.isArray(rawBooks)) return [];
       return rawBooks.map((b, idx) => {
-        // 예전 버전에서 coverEmoji만 쓰던 데이터도 24종 아이콘으로 자동 매핑
         let iconId = b.iconId;
         if (!iconId && b.coverEmoji) {
           const found = BOOK_ICONS.find(ic => ic.emoji === b.coverEmoji);
@@ -927,9 +916,9 @@
               endDate: r.endDate || '',
               currentPage: Number(r.currentPage) || 0,
               memo: r.memo || '',
-              review: r.review || '', // 심층 독후감
-              quotes: Array.isArray(r.quotes) ? r.quotes : [], // 문장 발췌 목록
-              photos: Array.isArray(r.photos) ? r.photos : []  // 초경량 사진 목록
+              review: r.review || '',
+              quotes: Array.isArray(r.quotes) ? r.quotes : [],
+              photos: Array.isArray(r.photos) ? r.photos : []
             }))
           : [{
               round: 1,
@@ -1206,6 +1195,12 @@
       return { pacePercent, pacePage, remainDays, totalDays };
     }
 
+    // ==========================================================
+    // [핵심 수정] <지금 읽고 있는 책 진도 카드>
+    // - 상단 버튼 줄과 책 제목/저자 줄을 2단 분리하여 가로 폭 100% 확보
+    // - 책 제목과 저자에서 생략(truncate) 완전 제거 -> 전체 이름 완벽 표시
+    // - 제목(text-xl sm:text-2xl) 및 저자(text-sm sm:text-base) 글씨 크기 확대
+    // ==========================================================
     function renderReadingCards() {
       const container = document.getElementById('readingCardsContainer');
       const activeItems = getActiveReadingItems();
@@ -1244,9 +1239,9 @@
           const clampedLeft = Math.min(96, Math.max(4, paceInfo.pacePercent));
 
           paceMarkerHtml = `
-            <div class="relative w-full h-7 mb-0.5 select-none">
+            <div class="relative w-full h-7 mb-1 select-none">
               <div class="absolute -translate-x-1/2 flex flex-col items-center transition-all duration-300" style="left: ${clampedLeft}%;">
-                <span class="px-2 py-0.5 rounded-md bg-cozyBrown text-white text-[10px] font-bold whitespace-nowrap shadow-xs">
+                <span class="px-2.5 py-0.5 rounded-md bg-cozyBrown text-white text-[11px] font-bold whitespace-nowrap shadow-xs">
                   권장 ${paceInfo.pacePage}p (${paceInfo.pacePercent}%)
                 </span>
                 <span class="text-cozyBrown text-xs leading-none -mt-0.5">▼</span>
@@ -1255,60 +1250,70 @@
           `;
 
           paceFeedbackHtml = `
-            <div class="mt-2.5 px-3 py-2 rounded-xl bg-warmBeige/60 border border-amber-200/70 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="mt-3 px-3.5 py-2.5 rounded-xl bg-warmBeige/60 border border-amber-200/70 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm">
               <div>🎯 <strong>오늘의 권장 페이스:</strong> ${paceInfo.pacePage}p (${paceInfo.pacePercent}%) <span class="text-gray-500">· 목표일 ${reading.targetDate} (${dDayText})</span></div>
               <div>${statusMsg}</div>
             </div>
           `;
         } else {
           paceFeedbackHtml = `
-            <div class="mt-2.5 px-3 py-1.5 rounded-xl bg-warmBeige/40 border border-dashed border-amber-200 text-xs text-gray-500 flex items-center justify-between">
+            <div class="mt-3 px-3.5 py-2 rounded-xl bg-warmBeige/40 border border-dashed border-amber-200 text-xs sm:text-sm text-gray-500 flex items-center justify-between">
               <span>🎯 완독 목표일을 설정하면 진도표 위에 오늘 읽어야 할 <strong>권장 페이스(▼)</strong>가 표시됩니다.</span>
-              <button onclick="openBookModal('${book.id}', ${roundIndex})" class="text-amber-800 font-bold underline">목표일 설정</button>
+              <button onclick="openBookModal('${book.id}', ${roundIndex})" class="text-amber-800 font-bold underline shrink-0 ml-2">목표일 설정</button>
             </div>
           `;
         }
 
         return `
-          <div id="readingCard-${book.id}-${reading.round}" class="bg-white rounded-3xl p-5 border border-amber-200/90 shadow-sm flex flex-col justify-between transition">
+          <div id="readingCard-${book.id}-${reading.round}" class="bg-white rounded-3xl p-5 sm:p-6 border border-amber-200/90 shadow-sm flex flex-col justify-between transition">
             <div>
-              <div class="flex items-start justify-between gap-2 mb-4">
-                <div class="flex items-center gap-3 min-w-0">
-                  <div class="rounded-2xl flex items-center justify-center text-3xl shrink-0 border shadow-2xs"
-                    style="background-color: ${icon.bg}; border-color: ${icon.border}; width: 52px; height: 52px;">
-                    ${icon.emoji}
-                  </div>
-                  <div class="min-w-0">
-                    <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
-                      <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200">
-                        ${roundEmoji} ${reading.round}회독 중
-                      </span>
-                      <span class="text-xs text-gray-500">시작: ${reading.startDate}</span>
-                    </div>
-                    <h3 class="font-title text-lg sm:text-xl text-cozyBrown leading-snug truncate">${escapeHtml(book.title)}</h3>
-                    <p class="text-xs text-gray-500 truncate">${escapeHtml(book.author)} · 총 ${book.totalPages}p</p>
-                  </div>
+              <!-- 1층: 좌측(N회독 배지 + 시작일 한 줄 고정) / 우측(발췌·독후감·사진 & 수정 버튼) -->
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3.5 border-b border-amber-100/90">
+                <div class="flex items-center gap-2">
+                  <span class="px-3 py-1 rounded-full text-xs sm:text-sm font-bold bg-softMint text-teal-900 border border-teal-200 whitespace-nowrap">
+                    ${roundEmoji} ${reading.round}회독 중
+                  </span>
+                  <span class="text-xs sm:text-sm font-bold text-gray-500 whitespace-nowrap">
+                    시작일: ${reading.startDate}
+                  </span>
                 </div>
 
-                <div class="flex flex-col sm:flex-row items-end sm:items-center gap-1.5 shrink-0">
+                <div class="flex items-center gap-1.5 shrink-0">
                   <button onclick="openBookModal('${book.id}', ${roundIndex}, true)"
-                    class="px-2.5 py-1.5 rounded-xl bg-softYellow hover:bg-amber-200 text-xs font-bold text-amber-950 border border-amber-300 transition">
+                    class="px-3 py-1.5 rounded-xl bg-softYellow hover:bg-amber-200 text-xs sm:text-sm font-bold text-amber-950 border border-amber-300 transition whitespace-nowrap">
                     🔖 발췌·독후감·사진
                   </button>
                   <button onclick="openBookModal('${book.id}', ${roundIndex}, false)"
-                    class="px-2.5 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs font-bold text-cozyBrown border border-amber-200 transition">
+                    class="px-3 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs sm:text-sm font-bold text-cozyBrown border border-amber-200 transition whitespace-nowrap">
                     ✏️ 수정
                   </button>
                 </div>
               </div>
 
+              <!-- 2층: 가로 폭 100% 전체를 사용하는 책 아이콘 + 책 제목(생략 없음 & 큰 글씨) + 저자 및 페이지 수 -->
+              <div class="flex items-start gap-3.5 sm:gap-4 mb-4">
+                <div class="rounded-2xl flex items-center justify-center text-3xl sm:text-4xl shrink-0 border shadow-2xs"
+                  style="background-color: ${icon.bg}; border-color: ${icon.border}; width: 58px; height: 58px;">
+                  ${icon.emoji}
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-title text-xl sm:text-2xl text-cozyBrown leading-snug break-keep">
+                    ${escapeHtml(book.title)}
+                  </h3>
+                  <p class="text-sm sm:text-base font-bold text-gray-600 mt-1 break-keep">
+                    ✍️ ${escapeHtml(book.author)} <span class="text-gray-400 font-normal mx-1">|</span> 📄 총 ${book.totalPages}p
+                  </p>
+                </div>
+              </div>
+
+              <!-- 3층: 현재 읽은 상황 시각 진도표 -->
               <div class="bg-cream p-4 rounded-2xl border border-amber-200/70 mb-3">
-                <div class="flex items-baseline justify-between mb-1">
-                  <span class="text-xs font-bold text-cozyBrown">📊 현재 읽은 상황 시각 진도표</span>
+                <div class="flex items-baseline justify-between mb-1.5">
+                  <span class="text-xs sm:text-sm font-bold text-cozyBrown">📊 현재 읽은 상황 시각 진도표</span>
                   <div>
-                    <span id="pageText-${book.id}-${roundIndex}" class="font-title text-lg text-accentCoral">${reading.currentPage}</span>
-                    <span class="text-xs text-gray-500">/ ${book.totalPages}p</span>
-                    <span id="percentText-${book.id}-${roundIndex}" class="ml-1.5 px-2 py-0.5 rounded-full text-xs font-bold bg-softCoral/60 text-red-900">${progressPercent}%</span>
+                    <span id="pageText-${book.id}-${roundIndex}" class="font-title text-xl sm:text-2xl text-accentCoral">${reading.currentPage}</span>
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">/ ${book.totalPages}p</span>
+                    <span id="percentText-${book.id}-${roundIndex}" class="ml-1.5 px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-bold bg-softCoral/60 text-red-900">${progressPercent}%</span>
                   </div>
                 </div>
 
@@ -1331,28 +1336,28 @@
                     <input type="number" min="0" max="${book.totalPages}" value="${reading.currentPage}"
                       id="numInput-${book.id}-${roundIndex}"
                       onchange="updateReadingProgress('${book.id}', ${roundIndex}, this.value)"
-                      class="px-2.5 py-1.5 rounded-xl bg-white border border-amber-300 text-sm font-bold text-center text-cozyBrown focus:outline-none" style="width: 72px;" />
-                    <span class="text-xs font-bold text-gray-500">p</span>
+                      class="px-2.5 py-1.5 rounded-xl bg-white border border-amber-300 text-sm sm:text-base font-bold text-center text-cozyBrown focus:outline-none" style="width: 78px;" />
+                    <span class="text-xs sm:text-sm font-bold text-gray-500">p</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 하단: 발췌/독후감/사진 배지 & 완독 버튼 -->
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-amber-100">
-              <div class="flex flex-wrap items-center gap-1.5 text-xs">
-                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2 py-0.5 rounded-lg bg-warmBeige hover:bg-amber-200/60 text-cozyBrown font-bold">
+            <!-- 4층: 하단 발췌/독후감/사진 배지 & 완독 버튼 -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2.5 border-t border-amber-100">
+              <div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm">
+                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2.5 py-1 rounded-lg bg-warmBeige hover:bg-amber-200/60 text-cozyBrown font-bold">
                   🔖 발췌 ${quotesCnt}
                 </button>
-                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2 py-0.5 rounded-lg ${hasReview ? 'bg-softMint text-teal-900' : 'bg-warmBeige text-gray-500'} font-bold">
+                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2.5 py-1 rounded-lg ${hasReview ? 'bg-softMint text-teal-900' : 'bg-warmBeige text-gray-500'} font-bold">
                   📝 독후감 ${hasReview ? '작성됨' : '쓰기'}
                 </button>
-                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2 py-0.5 rounded-lg bg-warmBeige hover:bg-amber-200/60 text-cozyBrown font-bold">
+                <button onclick="openBookModal('${book.id}', ${roundIndex}, true)" class="px-2.5 py-1 rounded-lg bg-warmBeige hover:bg-amber-200/60 text-cozyBrown font-bold">
                   📸 사진 ${photosCnt}
                 </button>
               </div>
               <button onclick="markAsCompleted('${book.id}', ${roundIndex})"
-                class="px-4 py-2 rounded-xl bg-softMint hover:bg-teal-200 text-teal-950 font-title text-xs sm:text-sm border border-teal-300 shrink-0 shadow-2xs transition active:scale-95">
+                class="px-4 py-2 rounded-xl bg-softMint hover:bg-teal-200 text-teal-950 font-title text-sm sm:text-base border border-teal-300 shrink-0 shadow-2xs transition active:scale-95">
                 🎉 완독했어요!
               </button>
             </div>
@@ -1726,8 +1731,8 @@
                   </div>
                 </div>
 
-                <h3 class="font-title text-lg text-cozyBrown leading-snug mb-0.5">${escapeHtml(book.title)}</h3>
-                <p class="text-xs text-gray-500 mb-3">${escapeHtml(book.author)} · ${book.totalPages}p</p>
+                <h3 class="font-title text-lg sm:text-xl text-cozyBrown leading-snug mb-1 break-keep">${escapeHtml(book.title)}</h3>
+                <p class="text-xs sm:text-sm font-bold text-gray-500 mb-3">${escapeHtml(book.author)} · ${book.totalPages}p</p>
 
                 <div class="text-xs text-gray-600 space-y-1 bg-warmBeige/50 p-3 rounded-2xl border border-amber-100">
                   <div class="flex justify-between"><span>🛒 구매일:</span><span class="font-bold">${book.purchaseDate || '-'}</span></div>
@@ -1767,10 +1772,10 @@
                   style="background-color: ${icon.bg}; border-color: ${icon.border};">
                   ${icon.emoji}
                 </div>
-                <div class="truncate">
-                  <div class="flex items-center gap-2">
-                    <h4 class="font-title text-base text-cozyBrown truncate">${escapeHtml(book.title)}</h4>
-                    <span class="text-xs text-gray-500 shrink-0">| ${escapeHtml(book.author)}</span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h4 class="font-title text-base sm:text-lg text-cozyBrown">${escapeHtml(book.title)}</h4>
+                    <span class="text-xs sm:text-sm text-gray-500 shrink-0">| ${escapeHtml(book.author)}</span>
                   </div>
                   <p class="text-xs text-gray-500 truncate">💬 ${latestReading?.memo ? escapeHtml(latestReading.memo) : '한줄 메모 없음'}</p>
                 </div>
@@ -1811,7 +1816,7 @@
     }
 
     // ==========================================================
-    // [탭 3 - 신규] ✨ 발췌·독후감·사진 모아보기 렌더링
+    // [탭 3] ✨ 발췌·독후감·사진 모아보기 렌더링
     // ==========================================================
     function setNotesFilter(filterKey) {
       notesFilter = filterKey;
@@ -1868,20 +1873,20 @@
           <div class="bg-white rounded-3xl p-5 sm:p-6 border border-amber-200/80 shadow-sm space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-100 pb-3">
               <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
+                <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl border shrink-0"
                   style="background-color: ${icon.bg}; border-color: ${icon.border};">
                   ${icon.emoji}
                 </div>
                 <div>
-                  <div class="flex items-center gap-2">
-                    <h3 class="font-title text-lg text-cozyBrown">${escapeHtml(book.title)}</h3>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="font-title text-lg sm:text-xl text-cozyBrown">${escapeHtml(book.title)}</h3>
                     <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200">${reading.round}회독</span>
                   </div>
-                  <p class="text-xs text-gray-500">${escapeHtml(book.author)} · ${reading.endDate ? `완독일: ${reading.endDate}` : `읽는 중 (${reading.currentPage}p)`}</p>
+                  <p class="text-xs sm:text-sm text-gray-500">${escapeHtml(book.author)} · ${reading.endDate ? `완독일: ${reading.endDate}` : `읽는 중 (${reading.currentPage}p)`}</p>
                 </div>
               </div>
               <button onclick="openBookModal('${book.id}', ${roundIndex}, true)"
-                class="px-3.5 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs font-bold text-cozyBrown border border-amber-200 transition">
+                class="px-3.5 py-1.5 rounded-xl bg-warmBeige hover:bg-amber-200/70 text-xs sm:text-sm font-bold text-cozyBrown border border-amber-200 transition">
                 ✏️ 발췌·독후감·사진 편집
               </button>
             </div>
@@ -1892,7 +1897,7 @@
                 ${hasReview ? `
                   <div class="p-4 rounded-2xl bg-softMint/20 border border-teal-200/70">
                     <div class="text-xs font-bold text-teal-900 mb-1">📝 심층 독후감</div>
-                    <p class="text-sm text-gray-800 whitespace-pre-line leading-relaxed">${escapeHtml(reading.review)}</p>
+                    <p class="text-sm sm:text-base text-gray-800 whitespace-pre-line leading-relaxed">${escapeHtml(reading.review)}</p>
                   </div>
                 ` : ''}
               </div>
@@ -2131,12 +2136,12 @@
               </div>
               <div class="flex-1 min-w-0">
                 <div class="flex flex-wrap items-center justify-between gap-1 mb-1">
-                  <h4 class="font-title text-base text-cozyBrown truncate">${escapeHtml(item.book.title)}</h4>
+                  <h4 class="font-title text-base sm:text-lg text-cozyBrown break-keep">${escapeHtml(item.book.title)}</h4>
                   <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-softMint text-teal-900 border border-teal-200 shrink-0">
                     ${item.badgeText}
                   </span>
                 </div>
-                <p class="text-xs text-gray-500 mb-1.5">${escapeHtml(item.book.author)} · ${item.book.totalPages}p · 완독일: <strong>${item.endDate}</strong></p>
+                <p class="text-xs sm:text-sm text-gray-500 mb-1.5">${escapeHtml(item.book.author)} · ${item.book.totalPages}p · 완독일: <strong>${item.endDate}</strong></p>
                 <p class="text-xs text-gray-700 bg-white/80 px-3 py-1.5 rounded-xl border border-amber-100 truncate">
                   💬 ${item.memo ? escapeHtml(item.memo) : '작성된 독후감 메모가 없습니다.'}
                 </p>
@@ -2156,9 +2161,9 @@
                   style="background-color: ${icon.bg}; border-color: ${icon.border};">
                   ${icon.emoji}
                 </div>
-                <div class="truncate">
-                  <div class="flex items-center gap-2">
-                    <h4 class="font-title text-sm sm:text-base text-cozyBrown truncate">${escapeHtml(item.book.title)}</h4>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h4 class="font-title text-sm sm:text-base text-cozyBrown">${escapeHtml(item.book.title)}</h4>
                     <span class="text-xs text-gray-500 shrink-0">| ${escapeHtml(item.book.author)}</span>
                   </div>
                   <p class="text-xs text-gray-500 truncate">💬 ${item.memo ? escapeHtml(item.memo) : '메모 없음'}</p>
@@ -2216,7 +2221,6 @@
       renderIconPalette();
     }
 
-    // 모달 안의 발췌 문장 리스트 렌더링
     function renderModalQuotesList() {
       document.getElementById('modalQuotesCountBadge').textContent = `${modalTempQuotes.length}개`;
       const container = document.getElementById('modalQuotesListContainer');
@@ -2263,7 +2267,6 @@
       renderModalQuotesList();
     }
 
-    // [핵심] HTML5 Canvas 기반 초경량 사진 자동 압축 함수 (720px, JPEG 0.68 -> 약 35~55KB)
     function compressImageFileToDataUrl(file, maxWidth = 720, quality = 0.68) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -2489,7 +2492,6 @@
     }
 
     function saveBookModal() {
-      // 혹시 사용자가 문장 입력칸에 글을 적어두고 '+ 문장 추가' 버튼을 안 누른 채 바로 저장하기를 눌렀다면 자동 포함!
       const pendingQuoteText = document.getElementById('newQuoteTextInput').value.trim();
       if (pendingQuoteText) {
         addQuoteInModal();
@@ -2754,7 +2756,6 @@
         const parsed = JSON.parse(decodedJson);
 
         if (parsed && Array.isArray(parsed.books)) {
-          // 기존 GitHub 백업 데이터도 normalizeBooksData를 통해 100% 무결점 호환!
           books = normalizeBooksData(parsed.books);
           if (parsed.yearlyGoal) yearlyGoal = parsed.yearlyGoal;
           saveData(false);
@@ -2921,7 +2922,6 @@
           const importedBooks = Array.isArray(parsed) ? parsed : parsed.books;
           if (!Array.isArray(importedBooks)) throw new Error('유효하지 않은 백업 형식');
 
-          // 기존 구버전 백업 파일도 normalizeBooksData를 거쳐 100% 호환 복원!
           books = normalizeBooksData(importedBooks);
           if (parsed.yearlyGoal) yearlyGoal = parseInt(parsed.yearlyGoal, 10) || 30;
           saveData(true);
