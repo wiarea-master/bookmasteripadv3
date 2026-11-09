@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T13:27:44.415Z",
+  "updatedAt": "2026-11-09T13:38:53.296Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -296,7 +296,7 @@
     },
     {
       "id": "book_1794061552481",
-      "title": "생각에 관한 생각",
+      "title": "Thinking, Fast and Slow 생각에 관한 생각",
       "author": "대네얼 카너먼",
       "totalPages": 1291,
       "purchaseDate": "2026-11-07",
