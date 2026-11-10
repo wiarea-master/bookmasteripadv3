@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T15:47:48.196Z",
+  "updatedAt": "2026-11-10T00:24:20.793Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -325,9 +325,9 @@
     },
     {
       "id": "book_1794061433756",
-      "title": "The 7 habits of Highly Effective People",
+      "title": "The 7 habits of Highly Effective People - 30years new edition",
       "author": "Stephen Covey",
-      "totalPages": 495,
+      "totalPages": 1079,
       "purchaseDate": "2026-11-05",
       "iconId": "sky-book",
       "readings": [
