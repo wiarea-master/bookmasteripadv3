@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-14T14:44:54.348Z",
+  "updatedAt": "2026-11-14T14:45:56.123Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -313,7 +313,7 @@
           "round": 1,
           "status": "reading",
           "startDate": "2026-11-07",
-          "targetDate": "2026-11-23",
+          "targetDate": "2026-11-29",
           "endDate": "",
           "currentPage": 228,
           "memo": "행동주의 심리학..",
