@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-18T11:23:49.668Z",
+  "updatedAt": "2026-11-18T11:24:10.659Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -342,7 +342,7 @@
           "round": 1,
           "status": "reading",
           "startDate": "2026-11-07",
-          "targetDate": "2026-11-16",
+          "targetDate": "2026-11-22",
           "endDate": "",
           "currentPage": 705,
           "memo": "내 인생의 나침반",
