@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T00:50:34.714Z",
+  "updatedAt": "2026-11-22T00:51:20.078Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -218,7 +218,7 @@
           "startDate": "2026-11-22",
           "targetDate": "",
           "endDate": "",
-          "currentPage": 102,
+          "currentPage": 0,
           "memo": "정리하기 위해 한 번 더!",
           "review": "",
           "quotes": [],
