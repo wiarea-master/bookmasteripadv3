@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-22T00:52:22.405Z",
+  "updatedAt": "2026-11-22T00:53:27.190Z",
   "yearlyGoal": 24,
   "books": [
     {
@@ -230,6 +230,18 @@
               "createdAt": "2026-11-10"
             }
           ]
+        },
+        {
+          "round": 3,
+          "status": "reading",
+          "startDate": "2026-11-22",
+          "targetDate": "2026-12-06",
+          "endDate": "",
+          "currentPage": 0,
+          "memo": "",
+          "review": "",
+          "quotes": [],
+          "photos": []
         }
       ]
     },
