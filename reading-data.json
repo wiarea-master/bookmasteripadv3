@@ -1,7 +1,29 @@
 {
-  "updatedAt": "2026-11-25T10:02:08.471Z",
+  "updatedAt": "2026-11-25T10:03:40.622Z",
   "yearlyGoal": 24,
   "books": [
+    {
+      "id": "book_1795601018664",
+      "title": "돈의 방정식",
+      "author": "모건 하우절",
+      "totalPages": 361,
+      "purchaseDate": "2026-11-24",
+      "iconId": "sky-book",
+      "readings": [
+        {
+          "round": 1,
+          "status": "reading",
+          "startDate": "2026-11-25",
+          "targetDate": "2026-12-06",
+          "endDate": "",
+          "currentPage": 0,
+          "memo": "",
+          "review": "",
+          "quotes": [],
+          "photos": []
+        }
+      ]
+    },
     {
       "id": "book_1794124353711",
       "title": "3개의 미국 ETF로 은퇴하라",
